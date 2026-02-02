@@ -16,7 +16,7 @@ I built this without frameworks to learn the fundamentals properly.
 
 ## Projects Featured
 
-- **Next.js Dashboard** - Learning React/Next.js through the official tutorial
+- **AI Trading Agent** - Exploring autonomous trading on Hyperliquid
 - **Trading Algorithm Explorations** - Learning Python through financial concepts
 - **Options Pricing Model** - Exploring Monte Carlo simulations
 - **This Portfolio** - Learning web development basics
