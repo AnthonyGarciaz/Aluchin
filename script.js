@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initNavigation();
     initExperienceTabs();
     initScrollAnimations();
-    initCounterAnimation();
+    // initCounterAnimation(); // Removed - no longer using stats
     initSmoothScroll();
 });
 
@@ -70,7 +70,7 @@ function initTypingEffect() {
     const typingElement = document.querySelector('.typing-text');
     if (!typingElement) return;
 
-    const words = ['web.', 'future.', 'cloud.', 'world.'];
+    const words = ['to learn.', 'to grow.', 'to contribute.'];
     let wordIndex = 0;
     let charIndex = 0;
     let isDeleting = false;
@@ -360,24 +360,17 @@ window.addEventListener('load', () => {
 // Console Easter Egg
 // ============================================
 console.log(`
-%c    _          _   _
-%c   / \\   _ __ | |_| |__   ___  _ __  _   _
-%c  / _ \\ | '_ \\| __| '_ \\ / _ \\| '_ \\| | | |
-%c / ___ \\| | | | |_| | | | (_) | | | | |_| |
-%c/_/   \\_\\_| |_|\\__|_| |_|\\___/|_| |_|\\__, |
-%c                                      |___/
+%c👋 Hey there!
 
-%c👋 Hey! Like what you see? Let's connect!
-%cLinkedIn: linkedin.com/in/jdbdkshso-g-310414147
+%cI'm Anthony - a CS grad looking for my first dev role.
+%cIf you're hiring juniors or know someone who is, let's talk!
+
 %cGitHub: github.com/AnthonyGarciaz
+%cLinkedIn: linkedin.com/in/jdbdkshso-g-310414147
 `,
-'color: #6366f1; font-weight: bold;',
-'color: #818cf8; font-weight: bold;',
-'color: #a855f7; font-weight: bold;',
-'color: #c084fc; font-weight: bold;',
-'color: #d8b4fe; font-weight: bold;',
-'color: #e9d5ff; font-weight: bold;',
-'color: #10b981; font-size: 14px;',
+'color: #6366f1; font-size: 16px; font-weight: bold;',
+'color: #e4e4e7; font-size: 13px;',
 'color: #a1a1aa; font-size: 12px;',
-'color: #a1a1aa; font-size: 12px;'
+'color: #818cf8; font-size: 12px;',
+'color: #818cf8; font-size: 12px;'
 );

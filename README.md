@@ -1,39 +1,29 @@
-# Personal Portfolio - Anthony Garcia
+# Anthony Garcia - Portfolio
 
-A modern, responsive portfolio website built with vanilla HTML, CSS, and JavaScript.
+Personal portfolio website for a CS graduate seeking entry-level developer opportunities.
 
-## Features
+## About
 
-- Dark theme with modern aesthetics
-- Fully responsive design with mobile navigation
-- Smooth scroll animations and transitions
-- Custom cursor effects (on desktop)
-- Typing animation effect
-- Interactive code window with glow effect
-- Experience tabs with dynamic content
-- Project showcase grid
+I'm a 2021 Computer Science graduate looking for my first role in tech. This site showcases my learning journey and the projects I've been exploring.
 
-## Tech Stack
+## Built With
 
 - HTML5
-- CSS3 (Custom properties, Flexbox, Grid)
-- Vanilla JavaScript (ES6+)
-- Google Fonts (JetBrains Mono, Inter)
+- CSS3 (no frameworks)
+- Vanilla JavaScript
 
-## Getting Started
+I built this without frameworks to learn the fundamentals properly.
 
-Simply open `index.html` in your browser or deploy to any static hosting service.
+## Projects Featured
 
-## Structure
+- **Next.js Dashboard** - Learning React/Next.js through the official tutorial
+- **Trading Algorithm Explorations** - Learning Python through financial concepts
+- **Options Pricing Model** - Exploring Monte Carlo simulations
+- **This Portfolio** - Learning web development basics
 
-```
-/
-├── index.html      # Main HTML file
-├── styles.css      # All styles
-├── script.js       # Interactive features
-└── README.md
-```
+## Contact
 
-## License
+- GitHub: [AnthonyGarciaz](https://github.com/AnthonyGarciaz)
+- LinkedIn: [Profile](https://www.linkedin.com/in/jdbdkshso-g-310414147/)
 
-MIT
+Open to junior developer roles, internships, and apprenticeships.
