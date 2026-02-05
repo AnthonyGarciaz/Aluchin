@@ -621,7 +621,7 @@
            ============================================ */
         @supports (padding-bottom: env(safe-area-inset-bottom)) {
             .finale {
-                padding-bottom: calc(3rem + env(safe-area-inset-bottom));
+                padding-bottom: calc(6rem + env(safe-area-inset-bottom));
             }
         }
 
@@ -635,6 +635,301 @@
 
             .promise-cards {
                 grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* ============================================
+           Music Player
+           ============================================ */
+        .music-player {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .music-player.hidden {
+            transform: translateY(100%);
+        }
+
+        .player-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.625rem 1rem;
+            background: rgba(26, 10, 20, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(232, 69, 126, 0.15);
+        }
+
+        .player-toggle {
+            background: none;
+            border: none;
+            color: var(--rose);
+            font-size: 1.25rem;
+            cursor: pointer;
+            padding: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .player-toggle:active {
+            transform: scale(0.9);
+        }
+
+        .player-now-playing {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .player-song-title {
+            font-family: var(--font-ui);
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-light);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .player-song-artist {
+            font-family: var(--font-ui);
+            font-size: 0.625rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .player-expand {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .player-expand:hover {
+            color: var(--text-light);
+        }
+
+        .player-expand svg {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .player-expand.open svg {
+            transform: rotate(180deg);
+        }
+
+        .player-drawer {
+            max-height: 0;
+            overflow: hidden;
+            background: rgba(18, 8, 16, 0.96);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .player-drawer.open {
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .player-drawer::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        .player-drawer::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .player-drawer::-webkit-scrollbar-thumb {
+            background: var(--rose-deep);
+            border-radius: 3px;
+        }
+
+        .drawer-header {
+            padding: 1rem 1rem 0.5rem;
+            font-family: var(--font-display);
+            font-size: 0.875rem;
+            font-style: italic;
+            color: var(--rose-light);
+            text-align: center;
+        }
+
+        .playlist-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.25rem;
+            padding: 0.5rem 0.75rem 1rem;
+        }
+
+        .playlist-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.625rem 0.75rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            background: transparent;
+            text-align: left;
+            width: 100%;
+        }
+
+        .playlist-item:active {
+            background: rgba(232, 69, 126, 0.1);
+            transform: scale(0.98);
+        }
+
+        .playlist-item.active {
+            background: rgba(232, 69, 126, 0.08);
+            border: 1px solid rgba(232, 69, 126, 0.15);
+        }
+
+        .playlist-item-number {
+            font-family: var(--font-ui);
+            font-size: 0.625rem;
+            color: var(--text-muted);
+            width: 1.25rem;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .playlist-item.active .playlist-item-number {
+            color: var(--rose);
+        }
+
+        .playlist-item-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .playlist-item-title {
+            font-family: var(--font-ui);
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--text-light);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .playlist-item.active .playlist-item-title {
+            color: var(--rose-light);
+        }
+
+        .playlist-item-artist {
+            font-family: var(--font-ui);
+            font-size: 0.6875rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .playlist-item-mood {
+            font-size: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .spotify-frame-container {
+            position: fixed;
+            bottom: -200px;
+            left: 0;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .spotify-frame-container.active {
+            position: fixed;
+            bottom: 52px;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 80px;
+            overflow: visible;
+            opacity: 1;
+            pointer-events: auto;
+            z-index: 49;
+            background: rgba(18, 8, 16, 0.98);
+            border-top: 1px solid rgba(232, 69, 126, 0.1);
+        }
+
+        .spotify-frame-container iframe {
+            width: 100%;
+            height: 80px;
+            border: none;
+        }
+
+        .music-entry-btn {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--rose-deep), var(--rose));
+            border: none;
+            color: white;
+            font-size: 1.25rem;
+            cursor: pointer;
+            z-index: 51;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(232, 69, 126, 0.4);
+            transition: all 0.3s ease;
+            animation: gentlePulse 3s ease-in-out infinite;
+        }
+
+        .music-entry-btn.player-active {
+            animation: none;
+            bottom: calc(52px + 0.75rem);
+            width: 36px;
+            height: 36px;
+            font-size: 1rem;
+            box-shadow: 0 2px 10px rgba(232, 69, 126, 0.3);
+        }
+
+        .music-entry-btn:active {
+            transform: scale(0.9);
+        }
+
+        @keyframes gentlePulse {
+            0%, 100% { box-shadow: 0 4px 20px rgba(232, 69, 126, 0.4); }
+            50% { box-shadow: 0 4px 30px rgba(232, 69, 126, 0.6); }
+        }
+
+        @supports (padding-bottom: env(safe-area-inset-bottom)) {
+            .player-bar {
+                padding-bottom: calc(0.625rem + env(safe-area-inset-bottom));
+            }
+            .music-entry-btn {
+                bottom: calc(1.5rem + env(safe-area-inset-bottom));
+            }
+            .music-entry-btn.player-active {
+                bottom: calc(52px + 0.75rem + env(safe-area-inset-bottom));
+            }
+            .spotify-frame-container.active {
+                bottom: calc(52px + env(safe-area-inset-bottom));
             }
         }
     </style>
@@ -918,6 +1213,32 @@
     </section>
 
     <!-- ============================================
+         Music Player - Our Soundtrack
+         ============================================ -->
+    <button class="music-entry-btn" id="musicEntryBtn" aria-label="Play music">&#9835;</button>
+
+    <div class="music-player hidden" id="musicPlayer">
+        <div class="player-drawer" id="playerDrawer">
+            <p class="drawer-header">Our Soundtrack</p>
+            <div class="playlist-grid" id="playlistGrid"></div>
+        </div>
+        <div class="player-bar">
+            <button class="player-toggle" id="playerToggle" aria-label="Play/Pause">&#9654;</button>
+            <div class="player-now-playing">
+                <div class="player-song-title" id="playerTitle">Tap a song to play</div>
+                <div class="player-song-artist" id="playerArtist">curated for you, Kennedy</div>
+            </div>
+            <button class="player-expand" id="playerExpand" aria-label="Show playlist">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="spotify-frame-container" id="spotifyContainer">
+        <iframe id="spotifyFrame" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </div>
+
+    <!-- ============================================
          JavaScript - Bringing It All To Life
          ============================================ -->
     <script>
@@ -1129,6 +1450,125 @@
                 setTimeout(() => sparkle.remove(), 1000);
             }
         }
+
+        // ============================================
+        // Music Player
+        // ============================================
+        const playlist = [
+            { title: 'Mrs Magic', artist: 'Strawberry Guy', id: '0TZejo18HlJ86OrWNsXKnw', mood: '\uD83C\uDF38' },
+            { title: 'Say Yes To Heaven', artist: 'Lana Del Rey', id: '098fSSsID99LoAKo7JoMz9', mood: '\u2601\uFE0F' },
+            { title: 'I Love You So', artist: 'The Walters', id: '1C7kXU46QO8ILWjwDpvhHV', mood: '\uD83D\uDC96' },
+            { title: 'Heavenly', artist: 'Cigarettes After Sex', id: '0M6TLjxixptslrmQpWbRoR', mood: '\uD83C\uDF19' },
+            { title: 'Those Eyes', artist: 'New West', id: '50x1Ic8CaXkYNvjmxe3WXy', mood: '\u2728' },
+            { title: 'we fell in love in october', artist: 'girl in red', id: '6FYfhKknpt05Om6YPcEYAg', mood: '\uD83C\uDF42' },
+            { title: 'Lover Girl', artist: 'Laufey', id: '5Rd93c1Rbg9qhSVHTC7xJN', mood: '\uD83C\uDF39' },
+            { title: 'Fade Into You', artist: 'Mazzy Star', id: '1LzNfuep1bnAUR9skqdHCK', mood: '\uD83D\uDCAB' },
+            { title: "Nothing's Gonna Hurt You Baby", artist: 'Cigarettes After Sex', id: '7cs7MLtAWvsdf3w5kBvfK2', mood: '\uD83E\uDE77' },
+            { title: 'End of Beginning', artist: 'Djo', id: '3qhlB30KknSejmIvZZLjOD', mood: '\uD83C\uDF05' },
+            { title: 'Kiss Me Again', artist: 'Roy Bee', id: '2zdu5Tm7Nak2uZlYddyCap', mood: '\uD83D\uDC8B' },
+            { title: 'My Love Mine All Mine', artist: 'Mitski', id: '3vkCueOmm7xQDoJ17W1Pm3', mood: '\uD83D\uDC9D' },
+        ];
+
+        const musicPlayer = document.getElementById('musicPlayer');
+        const musicEntryBtn = document.getElementById('musicEntryBtn');
+        const playerToggle = document.getElementById('playerToggle');
+        const playerTitle = document.getElementById('playerTitle');
+        const playerArtist = document.getElementById('playerArtist');
+        const playerExpand = document.getElementById('playerExpand');
+        const playerDrawer = document.getElementById('playerDrawer');
+        const playlistGrid = document.getElementById('playlistGrid');
+        const spotifyContainer = document.getElementById('spotifyContainer');
+        const spotifyFrame = document.getElementById('spotifyFrame');
+
+        let currentTrackIndex = -1;
+        let isPlaying = false;
+        let playerVisible = false;
+
+        // Build playlist UI
+        playlist.forEach((track, i) => {
+            const item = document.createElement('button');
+            item.classList.add('playlist-item');
+            item.setAttribute('data-index', i);
+            item.innerHTML = `
+                <span class="playlist-item-number">${i + 1}</span>
+                <div class="playlist-item-info">
+                    <div class="playlist-item-title">${track.title}</div>
+                    <div class="playlist-item-artist">${track.artist}</div>
+                </div>
+                <span class="playlist-item-mood">${track.mood}</span>
+            `;
+            item.addEventListener('click', () => playTrack(i));
+            playlistGrid.appendChild(item);
+        });
+
+        function playTrack(index) {
+            // Update active state in playlist
+            const items = document.querySelectorAll('.playlist-item');
+            items.forEach(item => item.classList.remove('active'));
+            items[index].classList.add('active');
+
+            currentTrackIndex = index;
+            const track = playlist[index];
+
+            // Update player bar info
+            playerTitle.textContent = track.title;
+            playerArtist.textContent = track.artist;
+
+            // Load Spotify embed
+            spotifyFrame.src = `https://open.spotify.com/embed/track/${track.id}?utm_source=generator&theme=0`;
+            spotifyContainer.classList.add('active');
+
+            isPlaying = true;
+            playerToggle.innerHTML = '\u23F8';
+
+            // Close drawer after picking a song
+            playerDrawer.classList.remove('open');
+            playerExpand.classList.remove('open');
+        }
+
+        // Entry button: show the player
+        musicEntryBtn.addEventListener('click', () => {
+            if (!playerVisible) {
+                playerVisible = true;
+                musicPlayer.classList.remove('hidden');
+                musicEntryBtn.classList.add('player-active');
+                // Auto open drawer on first tap
+                playerDrawer.classList.add('open');
+                playerExpand.classList.add('open');
+            } else {
+                // Toggle drawer
+                playerDrawer.classList.toggle('open');
+                playerExpand.classList.toggle('open');
+            }
+        });
+
+        // Expand button: toggle drawer
+        playerExpand.addEventListener('click', () => {
+            playerDrawer.classList.toggle('open');
+            playerExpand.classList.toggle('open');
+        });
+
+        // Play/pause toggle
+        playerToggle.addEventListener('click', () => {
+            if (currentTrackIndex === -1) {
+                // Nothing loaded yet, play first track
+                playTrack(0);
+            } else {
+                // Toggle by reloading or stopping
+                if (isPlaying) {
+                    spotifyContainer.classList.remove('active');
+                    spotifyFrame.src = '';
+                    isPlaying = false;
+                    playerToggle.innerHTML = '\u25B6';
+                } else {
+                    const track = playlist[currentTrackIndex];
+                    spotifyFrame.src = `https://open.spotify.com/embed/track/${track.id}?utm_source=generator&theme=0`;
+                    spotifyContainer.classList.add('active');
+                    isPlaying = true;
+                    playerToggle.innerHTML = '\u23F8';
+                }
+            }
+        });
 
     })();
     </script>
