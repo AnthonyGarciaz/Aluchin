@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For You</title>
+    <meta name="theme-color" content="#1a0a14">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        /* ============================================
+           VALENTINE'S PAGE - A Love Letter in Code
+           ============================================ */
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --rose: #e8457e;
+            --rose-light: #f472b6;
+            --rose-deep: #be185d;
+            --rose-glow: rgba(232, 69, 126, 0.4);
+            --blush: #fce7f3;
+            --gold: #d4a056;
+            --gold-light: #f5deb3;
+            --bg-dark: #1a0a14;
+            --bg-section: #120810;
+            --text-light: #fde8ef;
+            --text-soft: #d4a0b8;
+            --text-muted: #8a5070;
+            --font-display: 'Playfair Display', Georgia, serif;
+            --font-body: 'Lora', Georgia, serif;
+            --font-ui: 'Inter', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        /* ============================================
+           Floating Hearts Canvas
+           ============================================ */
+        #hearts-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ============================================
+           Opening - The Grand Entrance
+           ============================================ */
+        .opening {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .opening::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--rose-glow) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            opacity: 0.3;
+            animation: breathe 4s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.5; }
+        }
+
+        .big-heart {
+            font-size: 4rem;
+            animation: heartbeat 1.2s ease-in-out infinite;
+            margin-bottom: 2rem;
+            filter: drop-shadow(0 0 20px var(--rose-glow));
+            opacity: 0;
+            animation: heartEntrance 1s ease-out 0.3s forwards, heartbeat 1.2s ease-in-out 1.3s infinite;
+        }
+
+        @keyframes heartEntrance {
+            from { opacity: 0; transform: scale(0) rotate(-10deg); }
+            to { opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.15); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.1); }
+            70% { transform: scale(1); }
+        }
+
+        .opening-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 8vw, 4rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeUp 1s ease-out 0.8s forwards;
+        }
+
+        .opening-title .highlight {
+            background: linear-gradient(135deg, var(--rose), var(--rose-light), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .opening-subtitle {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-size: clamp(1rem, 4vw, 1.5rem);
+            color: var(--text-soft);
+            opacity: 0;
+            animation: fadeUp 1s ease-out 1.3s forwards;
+            max-width: 500px;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 2rem;
+            opacity: 0;
+            animation: fadeUp 1s ease-out 2s forwards;
+        }
+
+        .scroll-hint span {
+            display: block;
+            font-family: var(--font-ui);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .scroll-arrow {
+            width: 20px;
+            height: 20px;
+            border-right: 2px solid var(--rose);
+            border-bottom: 2px solid var(--rose);
+            transform: rotate(45deg);
+            margin: 0 auto;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: rotate(45deg) translateY(0); }
+            50% { transform: rotate(45deg) translateY(8px); }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ============================================
+           Section Base Styles
+           ============================================ */
+        .love-section {
+            padding: 5rem 1.5rem;
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .love-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .divider-line {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--rose), transparent);
+        }
+
+        .divider-heart {
+            color: var(--rose);
+            font-size: 0.875rem;
+            opacity: 0.7;
+        }
+
+        .section-label {
+            font-family: var(--font-ui);
+            font-size: 0.6875rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--rose);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        /* ============================================
+           Poem Section
+           ============================================ */
+        .poem-card {
+            background: linear-gradient(135deg, rgba(232, 69, 126, 0.06), rgba(212, 160, 86, 0.04));
+            border: 1px solid rgba(232, 69, 126, 0.15);
+            border-radius: 24px;
+            padding: 2.5rem 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .poem-card::before {
+            content: '\201C';
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            font-family: var(--font-display);
+            font-size: 8rem;
+            color: var(--rose);
+            opacity: 0.07;
+            line-height: 1;
+        }
+
+        .poem-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.25rem, 5vw, 1.75rem);
+            font-weight: 600;
+            color: var(--rose-light);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .poem-text {
+            font-family: var(--font-body);
+            font-style: italic;
+            font-size: clamp(0.9375rem, 3.5vw, 1.0625rem);
+            line-height: 2;
+            color: var(--text-light);
+            text-align: center;
+        }
+
+        .poem-text .stanza {
+            margin-bottom: 1.5rem;
+        }
+
+        .poem-text .stanza:last-child {
+            margin-bottom: 0;
+        }
+
+        .poem-signature {
+            text-align: right;
+            margin-top: 1.5rem;
+            font-family: var(--font-display);
+            font-style: italic;
+            color: var(--gold);
+            font-size: 0.9375rem;
+        }
+
+        /* ============================================
+           Love Quotes Carousel
+           ============================================ */
+        .quotes-section {
+            text-align: center;
+        }
+
+        .quotes-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: var(--text-light);
+        }
+
+        .quote-carousel {
+            position: relative;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quote-slide {
+            position: absolute;
+            width: 100%;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            padding: 0 1rem;
+        }
+
+        .quote-slide.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .quote-text {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-size: clamp(1.125rem, 4vw, 1.375rem);
+            line-height: 1.7;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .quote-author {
+            font-family: var(--font-ui);
+            font-size: 0.8125rem;
+            color: var(--gold);
+            letter-spacing: 1px;
+        }
+
+        .quote-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .quote-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0;
+        }
+
+        .quote-dot.active {
+            background: var(--rose);
+            box-shadow: 0 0 8px var(--rose-glow);
+            transform: scale(1.3);
+        }
+
+        /* ============================================
+           Reasons I Love You
+           ============================================ */
+        .reasons-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .reasons-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .reason-card {
+            background: linear-gradient(135deg, rgba(232, 69, 126, 0.05), rgba(255, 255, 255, 0.02));
+            border: 1px solid rgba(232, 69, 126, 0.1);
+            border-radius: 16px;
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.5s ease;
+        }
+
+        .reason-card.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .reason-icon {
+            font-size: 1.25rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .reason-text {
+            font-size: 0.9375rem;
+            line-height: 1.6;
+            color: var(--text-soft);
+        }
+
+        .reason-text strong {
+            color: var(--text-light);
+        }
+
+        /* ============================================
+           Love Letter Section
+           ============================================ */
+        .letter-container {
+            background: linear-gradient(180deg, rgba(253, 232, 239, 0.03), rgba(212, 160, 86, 0.03));
+            border: 1px solid rgba(212, 160, 86, 0.15);
+            border-radius: 24px;
+            padding: 2.5rem 2rem;
+            position: relative;
+        }
+
+        .letter-container::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        .letter-greeting {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-size: 1.25rem;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+        }
+
+        .letter-body p {
+            font-size: 1rem;
+            line-height: 1.9;
+            color: var(--text-soft);
+            margin-bottom: 1.25rem;
+        }
+
+        .letter-closing {
+            margin-top: 2rem;
+            text-align: right;
+        }
+
+        .letter-closing p {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-size: 1.0625rem;
+            color: var(--rose-light);
+            margin-bottom: 0.25rem;
+        }
+
+        .letter-closing .signature {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--rose), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ============================================
+           Countdown / Promise Section
+           ============================================ */
+        .promise-section {
+            text-align: center;
+        }
+
+        .promise-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 5vw, 2rem);
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .promise-cards {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .promise-card {
+            background: linear-gradient(135deg, rgba(232, 69, 126, 0.06), rgba(212, 160, 86, 0.04));
+            border: 1px solid rgba(232, 69, 126, 0.12);
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.5s ease;
+        }
+
+        .promise-card.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .promise-emoji {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .promise-text {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-size: 0.9375rem;
+            line-height: 1.6;
+            color: var(--text-soft);
+        }
+
+        /* ============================================
+           Final Heart - Grand Finale
+           ============================================ */
+        .finale {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 3rem 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .finale-heart {
+            font-size: 5rem;
+            animation: heartbeat 1.2s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px var(--rose-glow));
+            margin-bottom: 2rem;
+        }
+
+        .finale-text {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 6vw, 2.5rem);
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+
+        .finale-text .glow {
+            background: linear-gradient(135deg, var(--rose), var(--rose-light), var(--gold), var(--rose));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .finale-sub {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-size: clamp(1rem, 4vw, 1.25rem);
+            color: var(--text-soft);
+            max-width: 400px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 3rem;
+            font-family: var(--font-ui);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--rose);
+        }
+
+        /* ============================================
+           Touch Sparkle Effect
+           ============================================ */
+        .sparkle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 100;
+            font-size: 1rem;
+            animation: sparkleFloat 1s ease-out forwards;
+        }
+
+        @keyframes sparkleFloat {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-60px) scale(0.3); }
+        }
+
+        /* ============================================
+           iPhone Safe Area
+           ============================================ */
+        @supports (padding-bottom: env(safe-area-inset-bottom)) {
+            .finale {
+                padding-bottom: calc(3rem + env(safe-area-inset-bottom));
+            }
+        }
+
+        /* ============================================
+           Responsive - Tablets
+           ============================================ */
+        @media (min-width: 600px) {
+            .reasons-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .promise-cards {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Hearts Background -->
+    <canvas id="hearts-canvas"></canvas>
+
+    <!-- ============================================
+         Section 1: Grand Entrance
+         ============================================ -->
+    <section class="opening">
+        <div class="big-heart">&#10084;&#65039;</div>
+        <h1 class="opening-title">
+            Happy Valentine's Day,<br>
+            <span class="highlight">My Love</span>
+        </h1>
+        <p class="opening-subtitle">
+            I built this little corner of the internet just for you.
+            Because you deserve a love letter that never fades.
+        </p>
+        <div class="scroll-hint">
+            <span>Keep scrolling</span>
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         Section 2: A Poem For You
+         ============================================ -->
+    <section class="love-section" id="poem">
+        <div class="section-divider">
+            <div class="divider-line"></div>
+            <span class="divider-heart">&#10084;&#65039;</span>
+            <div class="divider-line"></div>
+        </div>
+        <p class="section-label">Written For You</p>
+
+        <div class="poem-card">
+            <h2 class="poem-title">My Everything</h2>
+            <div class="poem-text">
+                <div class="stanza">
+                    Before you, my world was lines of code,<br>
+                    A screen that glowed but never showed<br>
+                    The warmth that only you could bring,<br>
+                    The way you make my whole heart sing.
+                </div>
+                <div class="stanza">
+                    You are the sunrise I never set an alarm for,<br>
+                    The answer to a question I didn't know I was asking,<br>
+                    The calm in every storm I've weathered,<br>
+                    The reason every hard day still feels worth it.
+                </div>
+                <div class="stanza">
+                    In a world of variables and unknowns,<br>
+                    You are my only constant, my true home.<br>
+                    No algorithm could ever calculate<br>
+                    How deeply, endlessly, I love my soulmate.
+                </div>
+            </div>
+            <p class="poem-signature">&mdash; For you, always</p>
+        </div>
+
+        <div class="poem-card">
+            <h2 class="poem-title">You & I</h2>
+            <div class="poem-text">
+                <div class="stanza">
+                    They say love is patient, love is kind,<br>
+                    But they forgot to mention how love<br>
+                    Can make a quiet room feel infinite,<br>
+                    How your laugh rewrites my entire day.
+                </div>
+                <div class="stanza">
+                    You are every beautiful thing<br>
+                    I never thought I deserved,<br>
+                    Every dream I was afraid to have,<br>
+                    Every prayer I didn't know was answered.
+                </div>
+                <div class="stanza">
+                    So here I am &mdash; no fancy words enough,<br>
+                    No poem grand enough to hold this love.<br>
+                    Just me, just you, just us &mdash;<br>
+                    And that's more than enough.
+                </div>
+            </div>
+            <p class="poem-signature">&mdash; Yours, completely</p>
+        </div>
+    </section>
+
+    <!-- ============================================
+         Section 3: Love Quotes
+         ============================================ -->
+    <section class="love-section quotes-section" id="quotes">
+        <div class="section-divider">
+            <div class="divider-line"></div>
+            <span class="divider-heart">&#10084;&#65039;</span>
+            <div class="divider-line"></div>
+        </div>
+        <p class="section-label">Words That Remind Me Of You</p>
+        <h2 class="quotes-title">Love Quotes</h2>
+
+        <div class="quote-carousel" id="quoteCarousel">
+            <div class="quote-slide active" data-index="0">
+                <p class="quote-text">"I have waited for this opportunity for more than half a century, to repeat to you once again my vow of eternal fidelity and everlasting love."</p>
+                <p class="quote-author">&mdash; Gabriel Garc&iacute;a M&aacute;rquez</p>
+            </div>
+            <div class="quote-slide" data-index="1">
+                <p class="quote-text">"Whatever our souls are made of, his and mine are the same."</p>
+                <p class="quote-author">&mdash; Emily Bront&euml;</p>
+            </div>
+            <div class="quote-slide" data-index="2">
+                <p class="quote-text">"You know you're in love when you can't fall asleep because reality is finally better than your dreams."</p>
+                <p class="quote-author">&mdash; Dr. Seuss</p>
+            </div>
+            <div class="quote-slide" data-index="3">
+                <p class="quote-text">"In all the world, there is no heart for me like yours. In all the world, there is no love for you like mine."</p>
+                <p class="quote-author">&mdash; Maya Angelou</p>
+            </div>
+            <div class="quote-slide" data-index="4">
+                <p class="quote-text">"I saw that you were perfect, and so I loved you. Then I saw that you were not perfect and I loved you even more."</p>
+                <p class="quote-author">&mdash; Angelita Lim</p>
+            </div>
+            <div class="quote-slide" data-index="5">
+                <p class="quote-text">"If I had a flower for every time I thought of you, I could walk through my garden forever."</p>
+                <p class="quote-author">&mdash; Alfred Tennyson</p>
+            </div>
+            <div class="quote-slide" data-index="6">
+                <p class="quote-text">"The best thing to hold onto in life is each other."</p>
+                <p class="quote-author">&mdash; Audrey Hepburn</p>
+            </div>
+        </div>
+
+        <div class="quote-dots" id="quoteDots"></div>
+    </section>
+
+    <!-- ============================================
+         Section 4: Reasons I Love You
+         ============================================ -->
+    <section class="love-section" id="reasons">
+        <div class="section-divider">
+            <div class="divider-line"></div>
+            <span class="divider-heart">&#10084;&#65039;</span>
+            <div class="divider-line"></div>
+        </div>
+        <p class="section-label">An Incomplete List</p>
+        <h2 class="reasons-title">Reasons I Love You</h2>
+
+        <div class="reasons-grid">
+            <div class="reason-card">
+                <span class="reason-icon">&#10024;</span>
+                <p class="reason-text"><strong>Your smile</strong> &mdash; it could end wars and start revolutions. One look and my worst day becomes my best.</p>
+            </div>
+            <div class="reason-card">
+                <span class="reason-icon">&#128156;</span>
+                <p class="reason-text"><strong>Your heart</strong> &mdash; the way you care about people, the way you love without keeping score.</p>
+            </div>
+            <div class="reason-card">
+                <span class="reason-icon">&#128165;</span>
+                <p class="reason-text"><strong>Your strength</strong> &mdash; you handle everything with a grace that leaves me in awe every single time.</p>
+            </div>
+            <div class="reason-card">
+                <span class="reason-icon">&#127770;</span>
+                <p class="reason-text"><strong>Your presence</strong> &mdash; being next to you feels like coming home after the longest day.</p>
+            </div>
+            <div class="reason-card">
+                <span class="reason-icon">&#128293;</span>
+                <p class="reason-text"><strong>Your passion</strong> &mdash; the way your eyes light up when you talk about things you love.</p>
+            </div>
+            <div class="reason-card">
+                <span class="reason-icon">&#127775;</span>
+                <p class="reason-text"><strong>Your laugh</strong> &mdash; the most beautiful sound in any room. I'd do anything to hear it every day.</p>
+            </div>
+            <div class="reason-card">
+                <span class="reason-icon">&#129656;</span>
+                <p class="reason-text"><strong>Your patience</strong> &mdash; with me, with life, with everything. You make hard things feel manageable.</p>
+            </div>
+            <div class="reason-card">
+                <span class="reason-icon">&#128171;</span>
+                <p class="reason-text"><strong>You chose me</strong> &mdash; out of everyone in this world, you chose me. And I'll spend my life making sure you never regret it.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         Section 5: A Love Letter
+         ============================================ -->
+    <section class="love-section" id="letter">
+        <div class="section-divider">
+            <div class="divider-line"></div>
+            <span class="divider-heart">&#10084;&#65039;</span>
+            <div class="divider-line"></div>
+        </div>
+        <p class="section-label">From My Heart</p>
+
+        <div class="letter-container">
+            <p class="letter-greeting">My dearest love,</p>
+            <div class="letter-body">
+                <p>
+                    If I could give you one thing in this life, I'd give you the ability to see yourself through my eyes.
+                    Only then would you realize how special you are to me.
+                </p>
+                <p>
+                    You walked into my life and suddenly everything made sense. The late nights, the hard days,
+                    the moments where I felt lost &mdash; they were all leading me to you. You are the plot twist
+                    I never saw coming but always needed.
+                </p>
+                <p>
+                    I know I'm not perfect. I know I don't always say the right things or do everything right.
+                    But know this: every single day, I wake up wanting to be better &mdash; for you, for us,
+                    for the future we're building together.
+                </p>
+                <p>
+                    You are my best friend, my biggest supporter, my safe place, and the love of my life.
+                    There is no version of my future that doesn't have you in it.
+                </p>
+                <p>
+                    Happy Valentine's Day, baby. Today, tomorrow, and every day after &mdash; I choose you.
+                </p>
+            </div>
+            <div class="letter-closing">
+                <p>With all my love,</p>
+                <p>Forever and always,</p>
+                <span class="signature">Anthony</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         Section 6: My Promises
+         ============================================ -->
+    <section class="love-section promise-section" id="promises">
+        <div class="section-divider">
+            <div class="divider-line"></div>
+            <span class="divider-heart">&#10084;&#65039;</span>
+            <div class="divider-line"></div>
+        </div>
+        <p class="section-label">My Promises To You</p>
+        <h2 class="promise-title">Always & Forever</h2>
+
+        <div class="promise-cards">
+            <div class="promise-card">
+                <div class="promise-emoji">&#127801;</div>
+                <p class="promise-text">I promise to love you on the hard days just as much as the easy ones.</p>
+            </div>
+            <div class="promise-card">
+                <div class="promise-emoji">&#127769;</div>
+                <p class="promise-text">I promise to be your safe place when the world feels too heavy.</p>
+            </div>
+            <div class="promise-card">
+                <div class="promise-emoji">&#128588;</div>
+                <p class="promise-text">I promise to never stop trying to make you laugh &mdash; even when my jokes are terrible.</p>
+            </div>
+            <div class="promise-card">
+                <div class="promise-emoji">&#9749;</div>
+                <p class="promise-text">I promise to build a life with you that we're both proud of.</p>
+            </div>
+            <div class="promise-card">
+                <div class="promise-emoji">&#128142;</div>
+                <p class="promise-text">I promise to choose you, every morning, every evening, every moment in between.</p>
+            </div>
+            <div class="promise-card">
+                <div class="promise-emoji">&#127752;</div>
+                <p class="promise-text">I promise to grow with you, not apart. Whatever comes, we face it together.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         Final Section: Grand Finale
+         ============================================ -->
+    <section class="finale">
+        <div class="finale-heart">&#10084;&#65039;</div>
+        <h2 class="finale-text">
+            <span class="glow">You are my everything.</span>
+        </h2>
+        <p class="finale-sub">
+            Today and every day, I love you more than words on any screen could ever say.
+        </p>
+        <a href="index.html" class="back-link">&larr; Back to portfolio</a>
+    </section>
+
+    <!-- ============================================
+         JavaScript - Bringing It All To Life
+         ============================================ -->
+    <script>
+    (function() {
+        'use strict';
+
+        // ============================================
+        // Floating Hearts Canvas
+        // ============================================
+        const canvas = document.getElementById('hearts-canvas');
+        const ctx = canvas.getContext('2d');
+        let hearts = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        class Heart {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + 20;
+                this.size = Math.random() * 12 + 6;
+                this.speedY = Math.random() * 0.8 + 0.2;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.opacity = Math.random() * 0.15 + 0.03;
+                this.rotation = Math.random() * Math.PI * 2;
+                this.rotationSpeed = (Math.random() - 0.5) * 0.02;
+                this.wobble = Math.random() * Math.PI * 2;
+                this.wobbleSpeed = Math.random() * 0.02 + 0.01;
+            }
+
+            update() {
+                this.y -= this.speedY;
+                this.wobble += this.wobbleSpeed;
+                this.x += this.speedX + Math.sin(this.wobble) * 0.3;
+                this.rotation += this.rotationSpeed;
+
+                if (this.y < -30) {
+                    this.reset();
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                ctx.globalAlpha = this.opacity;
+                ctx.fillStyle = '#e8457e';
+                ctx.beginPath();
+
+                const s = this.size;
+                ctx.moveTo(0, -s * 0.3);
+                ctx.bezierCurveTo(-s * 0.5, -s, -s, -s * 0.4, 0, s * 0.4);
+                ctx.bezierCurveTo(s, -s * 0.4, s * 0.5, -s, 0, -s * 0.3);
+                ctx.fill();
+
+                ctx.restore();
+            }
+        }
+
+        // Create hearts
+        const heartCount = Math.min(30, Math.floor(window.innerWidth / 25));
+        for (let i = 0; i < heartCount; i++) {
+            const heart = new Heart();
+            heart.y = Math.random() * canvas.height;
+            hearts.push(heart);
+        }
+
+        function animateHearts() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            hearts.forEach(heart => {
+                heart.update();
+                heart.draw();
+            });
+            requestAnimationFrame(animateHearts);
+        }
+        animateHearts();
+
+        // ============================================
+        // Scroll Reveal Animations
+        // ============================================
+        const sections = document.querySelectorAll('.love-section');
+        const reasonCards = document.querySelectorAll('.reason-card');
+        const promiseCards = document.querySelectorAll('.promise-card');
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        sections.forEach(section => sectionObserver.observe(section));
+
+        const cardObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, i * 100);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        reasonCards.forEach((card, i) => {
+            card.style.transitionDelay = `${i * 0.08}s`;
+            cardObserver.observe(card);
+        });
+
+        promiseCards.forEach((card, i) => {
+            card.style.transitionDelay = `${i * 0.1}s`;
+            cardObserver.observe(card);
+        });
+
+        // ============================================
+        // Quote Carousel
+        // ============================================
+        const slides = document.querySelectorAll('.quote-slide');
+        const dotsContainer = document.getElementById('quoteDots');
+        let currentSlide = 0;
+        let autoPlayInterval;
+
+        // Create dots
+        slides.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.classList.add('quote-dot');
+            dot.setAttribute('aria-label', `Quote ${i + 1}`);
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(i));
+            dotsContainer.appendChild(dot);
+        });
+
+        const dots = document.querySelectorAll('.quote-dot');
+
+        function goToSlide(index) {
+            slides[currentSlide].classList.remove('active');
+            dots[currentSlide].classList.remove('active');
+            currentSlide = index;
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            goToSlide((currentSlide + 1) % slides.length);
+        }
+
+        function startAutoPlay() {
+            autoPlayInterval = setInterval(nextSlide, 4500);
+        }
+
+        function resetAutoPlay() {
+            clearInterval(autoPlayInterval);
+            startAutoPlay();
+        }
+
+        startAutoPlay();
+
+        // Swipe support for carousel on mobile
+        let touchStartX = 0;
+        const carousel = document.getElementById('quoteCarousel');
+
+        carousel.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        }, { passive: true });
+
+        carousel.addEventListener('touchend', (e) => {
+            const diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    goToSlide((currentSlide + 1) % slides.length);
+                } else {
+                    goToSlide((currentSlide - 1 + slides.length) % slides.length);
+                }
+                resetAutoPlay();
+            }
+        }, { passive: true });
+
+        // ============================================
+        // Touch/Click Sparkle Effect
+        // ============================================
+        const sparkleEmojis = ['\u2764\uFE0F', '\uD83D\uDC96', '\u2728', '\uD83C\uDF39', '\uD83D\uDC97', '\uD83D\uDC95', '\u2763\uFE0F', '\uD83E\uDE77'];
+
+        document.addEventListener('click', (e) => {
+            createSparkle(e.clientX, e.clientY);
+        });
+
+        document.addEventListener('touchstart', (e) => {
+            const touch = e.touches[0];
+            createSparkle(touch.clientX, touch.clientY);
+        }, { passive: true });
+
+        function createSparkle(x, y) {
+            for (let i = 0; i < 3; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle');
+                sparkle.textContent = sparkleEmojis[Math.floor(Math.random() * sparkleEmojis.length)];
+                sparkle.style.left = (x + (Math.random() - 0.5) * 40) + 'px';
+                sparkle.style.top = (y + (Math.random() - 0.5) * 40) + 'px';
+                document.body.appendChild(sparkle);
+
+                setTimeout(() => sparkle.remove(), 1000);
+            }
+        }
+
+    })();
+    </script>
+</body>
+</html>
