@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>For Kennedy</title>
-    <meta name="theme-color" content="#0d0509">
+    <title>Para Kennedy</title>
+    <meta name="theme-color" content="#0a0304">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,22 +14,22 @@
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --rose: #e8457e;
-            --rose-light: #f472b6;
-            --rose-pastel: #fbcfe8;
-            --rose-deep: #be185d;
-            --rose-glow: rgba(232, 69, 126, 0.35);
-            --blush: #fdf2f8;
-            --gold: #d4a056;
-            --gold-soft: #e8c88a;
-            --lavender: #c4b5fd;
-            --lavender-glow: rgba(196, 181, 253, 0.3);
-            --peach: #fed7aa;
-            --bg: #0d0509;
-            --bg-card: rgba(20, 8, 14, 0.7);
-            --text: #fdf2f8;
-            --text-soft: #e8b4c8;
-            --text-muted: #9a5070;
+            --rojo: #8b1a1a;
+            --rojo-vivo: #c0392b;
+            --rojo-rosa: #e74c6f;
+            --rosa-suave: #d4707a;
+            --borgona: #5c1018;
+            --oro: #c9a84c;
+            --oro-suave: #dbb766;
+            --oro-apagado: #a08030;
+            --vela: #f5c96c;
+            --vela-glow: rgba(245, 201, 108, 0.35);
+            --crema: #f5e6d3;
+            --bg: #0a0304;
+            --bg-card: rgba(15, 4, 6, 0.75);
+            --text: #f5e6d3;
+            --text-soft: #c9a08a;
+            --text-muted: #7a4a3a;
             --font-display: 'Playfair Display', Georgia, serif;
             --font-body: 'Cormorant Garamond', Georgia, serif;
             --font-ui: 'Inter', -apple-system, sans-serif;
@@ -53,25 +53,126 @@
         #petalsCanvas { z-index: 2; }
 
         /* ============================================
-           AURORA GRADIENT BACKGROUND
+           WARM GLOW BACKGROUND
            ============================================ */
         .aurora {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
             z-index: 0;
             background:
-                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(232, 69, 126, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse 60% 60% at 80% 20%, rgba(196, 181, 253, 0.06) 0%, transparent 50%),
-                radial-gradient(ellipse 70% 40% at 50% 80%, rgba(212, 160, 86, 0.05) 0%, transparent 50%);
-            animation: auroraShift 12s ease-in-out infinite alternate;
+                radial-gradient(ellipse 80% 50% at 50% 30%, rgba(139, 26, 26, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 50% at 20% 70%, rgba(201, 168, 76, 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 50% at 80% 70%, rgba(201, 168, 76, 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse 100% 40% at 50% 100%, rgba(92, 16, 24, 0.12) 0%, transparent 50%);
+            animation: glowShift 10s ease-in-out infinite alternate;
         }
-        @keyframes auroraShift {
-            0% { opacity: 0.6; filter: hue-rotate(0deg); }
-            100% { opacity: 1; filter: hue-rotate(15deg); }
+        @keyframes glowShift {
+            0% { opacity: 0.7; }
+            100% { opacity: 1; filter: brightness(1.1); }
         }
 
         /* ============================================
-           OPENING - Cinematic Entrance
+           ANIMATED CANDLES
+           ============================================ */
+        .candles {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 120px;
+            z-index: 1;
+            pointer-events: none;
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            padding: 0 5%;
+            opacity: 0.7;
+        }
+        .candle {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        .flame-container {
+            position: relative;
+            width: 14px;
+            height: 30px;
+        }
+        .flame {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 22px;
+            background: radial-gradient(ellipse at 50% 90%, #fff8e1, #f5c96c 30%, #e8a020 60%, rgba(200, 60, 20, 0.4) 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: flicker 0.15s ease-in-out infinite alternate;
+            box-shadow: 0 0 8px 4px rgba(245, 201, 108, 0.3), 0 0 20px 8px rgba(245, 201, 108, 0.15);
+        }
+        .flame::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 10px;
+            background: linear-gradient(to top, #2060ff, #60a0ff, transparent);
+            border-radius: 50%;
+            opacity: 0.7;
+        }
+        .flame-glow {
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: radial-gradient(circle, rgba(245, 201, 108, 0.25), transparent 70%);
+            animation: glowPulse 2s ease-in-out infinite;
+        }
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scaleY(1) scaleX(1) rotate(-1deg); }
+            25% { transform: translateX(-50%) scaleY(1.04) scaleX(0.96) rotate(0.5deg); }
+            50% { transform: translateX(-50%) scaleY(0.97) scaleX(1.02) rotate(-0.5deg); }
+            75% { transform: translateX(-50%) scaleY(1.02) scaleX(0.98) rotate(1deg); }
+            100% { transform: translateX(-50%) scaleY(0.98) scaleX(1.01) rotate(-0.5deg); }
+        }
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+            50% { opacity: 0.8; transform: translateX(-50%) scale(1.2); }
+        }
+        .candle-body {
+            width: 12px;
+            height: 50px;
+            background: linear-gradient(180deg, #f5e6d3, #e8d5c0, #d4c0a8);
+            border-radius: 2px 2px 3px 3px;
+            position: relative;
+        }
+        .candle-body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 6px;
+            background: #333;
+        }
+        .candle:nth-child(1) .flame { animation-delay: 0s; height: 20px; }
+        .candle:nth-child(2) .flame { animation-delay: 0.05s; }
+        .candle:nth-child(2) .candle-body { height: 60px; }
+        .candle:nth-child(3) .flame { animation-delay: 0.1s; height: 18px; }
+        .candle:nth-child(3) .candle-body { height: 45px; }
+        .candle:nth-child(4) .flame { animation-delay: 0.03s; }
+        .candle:nth-child(4) .candle-body { height: 55px; }
+        .candle:nth-child(5) .flame { animation-delay: 0.08s; height: 24px; }
+        .candle:nth-child(5) .candle-body { height: 42px; }
+
+        /* ============================================
+           OPENING
            ============================================ */
         .opening {
             min-height: 100vh;
@@ -85,22 +186,37 @@
             position: relative;
             z-index: 3;
         }
+        .opening::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(201, 168, 76, 0.08) 0%, rgba(139, 26, 26, 0.06) 40%, transparent 70%);
+            transform: translate(-50%, -50%);
+            animation: warmBreathe 5s ease-in-out infinite;
+        }
+        @keyframes warmBreathe {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.8; }
+        }
 
-        .opening-crown {
+        .opening-rose {
             font-size: 2.5rem;
             opacity: 0;
-            animation: crownDrop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s forwards;
-            filter: drop-shadow(0 0 12px rgba(212, 160, 86, 0.5));
+            animation: roseDrop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s forwards;
+            filter: drop-shadow(0 0 15px rgba(139, 26, 26, 0.5));
         }
-        @keyframes crownDrop {
-            from { opacity: 0; transform: translateY(-40px) scale(0.5); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+        @keyframes roseDrop {
+            from { opacity: 0; transform: translateY(-40px) rotate(-20deg) scale(0.5); }
+            to { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
         }
 
         .big-heart {
             font-size: 4.5rem;
             margin: 0.75rem 0 1.5rem;
-            filter: drop-shadow(0 0 25px var(--rose-glow));
+            filter: drop-shadow(0 0 25px rgba(139, 26, 26, 0.5));
             opacity: 0;
             animation: heartPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.6s forwards, heartbeat 1.3s ease-in-out 1.3s infinite;
         }
@@ -129,7 +245,7 @@
         .name-reveal {
             display: inline-block;
             position: relative;
-            background: linear-gradient(135deg, var(--rose), var(--rose-light), var(--gold-soft), var(--lavender), var(--rose));
+            background: linear-gradient(135deg, var(--rojo-vivo), var(--rojo-rosa), var(--oro), var(--rosa-suave), var(--rojo-vivo));
             background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -140,10 +256,9 @@
             content: '';
             position: absolute;
             bottom: -4px;
-            left: 0;
-            right: 0;
+            left: 0; right: 0;
             height: 2px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            background: linear-gradient(90deg, transparent, var(--oro), transparent);
             animation: underlineGrow 1.5s ease-out 1.8s both;
         }
         @keyframes nameShimmer {
@@ -151,10 +266,7 @@
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-        @keyframes underlineGrow {
-            from { transform: scaleX(0); }
-            to { transform: scaleX(1); }
-        }
+        @keyframes underlineGrow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
         .opening-sub {
             font-family: var(--font-body);
@@ -186,8 +298,8 @@
         }
         .scroll-arrow {
             width: 18px; height: 18px;
-            border-right: 1.5px solid var(--rose);
-            border-bottom: 1.5px solid var(--rose);
+            border-right: 1.5px solid var(--oro);
+            border-bottom: 1.5px solid var(--oro);
             transform: rotate(45deg);
             animation: arrowBounce 2s ease-in-out infinite;
         }
@@ -224,7 +336,7 @@
         }
         .divider-line {
             width: 50px; height: 1px;
-            background: linear-gradient(90deg, transparent, var(--rose-light), transparent);
+            background: linear-gradient(90deg, transparent, var(--oro-apagado), transparent);
         }
         .divider-icon { font-size: 0.75rem; opacity: 0.6; }
         .section-label {
@@ -233,73 +345,13 @@
             font-weight: 500;
             letter-spacing: 3.5px;
             text-transform: uppercase;
-            color: var(--rose);
+            color: var(--oro);
             text-align: center;
             margin-bottom: 0.75rem;
         }
 
         /* ============================================
-           TYPEWRITER POEM
-           ============================================ */
-        .poem-card {
-            background: var(--bg-card);
-            border: 1px solid rgba(232, 69, 126, 0.1);
-            border-radius: 28px;
-            padding: 2.5rem 1.75rem;
-            margin-bottom: 2rem;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-        .poem-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--rose-pastel), transparent);
-            opacity: 0.3;
-        }
-        .poem-card::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 28px;
-            background: radial-gradient(circle at 50% 0%, rgba(232, 69, 126, 0.04), transparent 60%);
-            pointer-events: none;
-        }
-        .poem-title {
-            font-family: var(--font-display);
-            font-size: clamp(1.35rem, 5vw, 1.8rem);
-            font-weight: 600;
-            font-style: italic;
-            color: var(--rose-light);
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-        .poem-text {
-            font-family: var(--font-body);
-            font-style: italic;
-            font-size: clamp(1rem, 3.8vw, 1.15rem);
-            font-weight: 300;
-            line-height: 2.1;
-            color: var(--text);
-            text-align: center;
-        }
-        .poem-text .stanza { margin-bottom: 1.75rem; }
-        .poem-text .stanza:last-child { margin-bottom: 0; }
-        .poem-signature {
-            text-align: right;
-            margin-top: 1.5rem;
-            font-family: var(--font-display);
-            font-style: italic;
-            font-weight: 500;
-            color: var(--gold-soft);
-            font-size: 0.95rem;
-        }
-
-        /* ============================================
-           INTERACTIVE BLOOM FLOWER
+           BLOOM FLOWER
            ============================================ */
         .bloom-section {
             text-align: center;
@@ -321,21 +373,19 @@
         .bloom-section.visible .bloom-prompt { opacity: 1; }
         .bloom-container {
             position: relative;
-            width: 180px;
-            height: 180px;
+            width: 180px; height: 180px;
             margin: 0 auto;
             cursor: pointer;
             -webkit-tap-highlight-color: transparent;
         }
         .bloom-ring {
-            position: absolute;
-            inset: 0;
+            position: absolute; inset: 0;
             border-radius: 50%;
-            border: 1px solid rgba(232, 69, 126, 0.2);
+            border: 1px solid rgba(139, 26, 26, 0.25);
             animation: bloomPulse 3s ease-in-out infinite;
         }
-        .bloom-ring:nth-child(2) { inset: -15px; animation-delay: 0.5s; border-color: rgba(196, 181, 253, 0.15); }
-        .bloom-ring:nth-child(3) { inset: -30px; animation-delay: 1s; border-color: rgba(212, 160, 86, 0.1); }
+        .bloom-ring:nth-child(2) { inset: -15px; animation-delay: 0.5s; border-color: rgba(201, 168, 76, 0.15); }
+        .bloom-ring:nth-child(3) { inset: -30px; animation-delay: 1s; border-color: rgba(139, 26, 26, 0.1); }
         @keyframes bloomPulse {
             0%, 100% { transform: scale(1); opacity: 0.5; }
             50% { transform: scale(1.05); opacity: 1; }
@@ -349,29 +399,84 @@
         }
         .bloom-container.bloomed .bloom-emoji {
             font-size: 5.5rem;
-            filter: drop-shadow(0 0 20px rgba(232, 69, 126, 0.5));
+            filter: drop-shadow(0 0 20px rgba(139, 26, 26, 0.5));
         }
         .bloom-container.bloomed .bloom-ring { animation: bloomBurst 0.6s ease-out forwards; }
-        @keyframes bloomBurst {
-            to { transform: scale(1.8); opacity: 0; }
-        }
+        @keyframes bloomBurst { to { transform: scale(1.8); opacity: 0; } }
         .bloom-message {
             font-family: var(--font-display);
             font-style: italic;
             font-size: 1.1rem;
-            color: var(--rose-light);
+            color: var(--rosa-suave);
             margin-top: 1.5rem;
             opacity: 0;
             transform: translateY(10px);
             transition: all 0.8s ease 0.3s;
         }
-        .bloom-container.bloomed ~ .bloom-message {
-            opacity: 1;
-            transform: translateY(0);
+        .bloom-container.bloomed ~ .bloom-message { opacity: 1; transform: translateY(0); }
+
+        /* ============================================
+           POEM CARDS
+           ============================================ */
+        .poem-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(139, 26, 26, 0.15);
+            border-radius: 28px;
+            padding: 2.5rem 1.75rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .poem-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--oro-apagado), transparent);
+            opacity: 0.3;
+        }
+        .poem-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 28px;
+            background: radial-gradient(circle at 50% 0%, rgba(201, 168, 76, 0.03), transparent 60%);
+            pointer-events: none;
+        }
+        .poem-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.35rem, 5vw, 1.8rem);
+            font-weight: 600;
+            font-style: italic;
+            color: var(--oro-suave);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .poem-text {
+            font-family: var(--font-body);
+            font-style: italic;
+            font-size: clamp(1rem, 3.8vw, 1.15rem);
+            font-weight: 300;
+            line-height: 2.1;
+            color: var(--text);
+            text-align: center;
+        }
+        .poem-text .stanza { margin-bottom: 1.75rem; }
+        .poem-text .stanza:last-child { margin-bottom: 0; }
+        .poem-signature {
+            text-align: right;
+            margin-top: 1.5rem;
+            font-family: var(--font-display);
+            font-style: italic;
+            font-weight: 500;
+            color: var(--oro);
+            font-size: 0.95rem;
         }
 
         /* ============================================
-           QUOTES CAROUSEL (upgraded)
+           QUOTE CAROUSEL
            ============================================ */
         .quotes-section { text-align: center; }
         .quotes-title {
@@ -388,8 +493,7 @@
             justify-content: center;
         }
         .quote-slide {
-            position: absolute;
-            width: 100%;
+            position: absolute; width: 100%;
             opacity: 0;
             transform: translateY(20px) scale(0.97);
             transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
@@ -408,7 +512,7 @@
             font-family: var(--font-ui);
             font-size: 0.75rem;
             font-weight: 400;
-            color: var(--gold-soft);
+            color: var(--oro);
             letter-spacing: 1px;
         }
         .quote-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 2rem; }
@@ -421,8 +525,8 @@
             padding: 0;
         }
         .quote-dot.active {
-            background: var(--rose);
-            box-shadow: 0 0 10px var(--rose-glow);
+            background: var(--rojo-vivo);
+            box-shadow: 0 0 10px rgba(192, 57, 43, 0.4);
             width: 20px;
             border-radius: 10px;
         }
@@ -440,7 +544,7 @@
         .reasons-grid { display: grid; grid-template-columns: 1fr; gap: 0.875rem; }
         .reason-card {
             background: var(--bg-card);
-            border: 1px solid rgba(232, 69, 126, 0.08);
+            border: 1px solid rgba(139, 26, 26, 0.1);
             border-radius: 20px;
             padding: 1.25rem 1.5rem;
             display: flex;
@@ -460,11 +564,11 @@
         .reason-text strong { color: var(--text); font-weight: 500; }
 
         /* ============================================
-           LOVE LETTER - handwritten feel
+           LOVE LETTER
            ============================================ */
         .letter-container {
-            background: linear-gradient(180deg, rgba(253, 232, 239, 0.03), rgba(212, 160, 86, 0.02));
-            border: 1px solid rgba(212, 160, 86, 0.12);
+            background: linear-gradient(180deg, rgba(92, 16, 24, 0.06), rgba(201, 168, 76, 0.03));
+            border: 1px solid rgba(201, 168, 76, 0.12);
             border-radius: 28px;
             padding: 2.5rem 1.75rem;
             position: relative;
@@ -474,21 +578,21 @@
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; height: 1px;
-            background: linear-gradient(90deg, transparent, var(--gold-soft), transparent);
+            background: linear-gradient(90deg, transparent, var(--oro-apagado), transparent);
             opacity: 0.4;
         }
         .letter-container::after {
             content: '';
             position: absolute;
             bottom: 0; left: 0; right: 0; height: 1px;
-            background: linear-gradient(90deg, transparent, var(--gold-soft), transparent);
+            background: linear-gradient(90deg, transparent, var(--oro-apagado), transparent);
             opacity: 0.2;
         }
         .letter-greeting {
             font-family: var(--font-display);
             font-style: italic;
             font-size: 1.35rem;
-            color: var(--gold-soft);
+            color: var(--oro-suave);
             margin-bottom: 1.75rem;
         }
         .letter-body p {
@@ -503,21 +607,21 @@
             font-family: var(--font-display);
             font-style: italic;
             font-size: 1.05rem;
-            color: var(--rose-light);
+            color: var(--rosa-suave);
             margin-bottom: 0.25rem;
         }
         .letter-closing .signature {
             font-family: var(--font-display);
             font-size: 1.6rem;
             font-weight: 700;
-            background: linear-gradient(135deg, var(--rose), var(--gold-soft));
+            background: linear-gradient(135deg, var(--rojo-vivo), var(--oro));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
         /* ============================================
-           PROMISES - floating glass cards
+           PROMISES
            ============================================ */
         .promise-section { text-align: center; }
         .promise-title {
@@ -529,7 +633,7 @@
         .promise-cards { display: grid; grid-template-columns: 1fr; gap: 0.875rem; }
         .promise-card {
             background: var(--bg-card);
-            border: 1px solid rgba(232, 69, 126, 0.08);
+            border: 1px solid rgba(139, 26, 26, 0.1);
             border-radius: 22px;
             padding: 1.5rem;
             text-align: center;
@@ -551,7 +655,7 @@
         }
 
         /* ============================================
-           KENNEDY'S NAME IN LIGHTS - Finale
+           FINALE
            ============================================ */
         .finale {
             min-height: 90vh;
@@ -568,7 +672,7 @@
         .finale-heart {
             font-size: 5.5rem;
             animation: heartbeat 1.3s ease-in-out infinite;
-            filter: drop-shadow(0 0 40px var(--rose-glow)) drop-shadow(0 0 80px rgba(232, 69, 126, 0.15));
+            filter: drop-shadow(0 0 40px rgba(139, 26, 26, 0.4)) drop-shadow(0 0 80px rgba(139, 26, 26, 0.15));
             margin-bottom: 2rem;
         }
         .finale-text {
@@ -579,7 +683,7 @@
             margin-bottom: 1.25rem;
         }
         .finale-text .glow {
-            background: linear-gradient(135deg, var(--rose), var(--rose-light), var(--gold-soft), var(--lavender), var(--rose));
+            background: linear-gradient(135deg, var(--rojo-vivo), var(--rojo-rosa), var(--oro), var(--rosa-suave), var(--rojo-vivo));
             background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -613,10 +717,10 @@
             text-transform: uppercase;
             transition: color 0.3s ease;
         }
-        .back-link:hover { color: var(--rose); }
+        .back-link:hover { color: var(--rojo-vivo); }
 
         /* ============================================
-           SPARKLE EFFECTS
+           SPARKLE
            ============================================ */
         .sparkle {
             position: fixed;
@@ -637,28 +741,27 @@
             position: fixed;
             bottom: 1.5rem;
             right: 1.5rem;
-            width: 50px;
-            height: 50px;
+            width: 50px; height: 50px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--rose-deep), var(--rose), var(--rose-light));
+            background: linear-gradient(135deg, var(--borgona), var(--rojo), var(--rojo-vivo));
             background-size: 200% 200%;
             border: none;
-            color: white;
+            color: var(--crema);
             font-size: 1.3rem;
             cursor: pointer;
             z-index: 51;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 25px rgba(232, 69, 126, 0.45);
+            box-shadow: 0 4px 25px rgba(139, 26, 26, 0.5);
             transition: all 0.3s ease;
             animation: btnFloat 3s ease-in-out infinite;
         }
         .music-btn.playing { animation: btnFloat 3s ease-in-out infinite, btnSpin 6s linear infinite; }
         .music-btn:active { transform: scale(0.88); }
         @keyframes btnFloat {
-            0%, 100% { box-shadow: 0 4px 25px rgba(232, 69, 126, 0.45); }
-            50% { box-shadow: 0 6px 35px rgba(232, 69, 126, 0.65); }
+            0%, 100% { box-shadow: 0 4px 25px rgba(139, 26, 26, 0.5); }
+            50% { box-shadow: 0 6px 35px rgba(139, 26, 26, 0.7); }
         }
         @keyframes btnSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
@@ -668,6 +771,7 @@
         @supports (padding-bottom: env(safe-area-inset-bottom)) {
             .finale { padding-bottom: calc(6rem + env(safe-area-inset-bottom)); }
             .music-btn { bottom: calc(1.5rem + env(safe-area-inset-bottom)); }
+            .candles { bottom: env(safe-area-inset-bottom); }
         }
         @media (min-width: 500px) {
             .reasons-grid { grid-template-columns: 1fr 1fr; }
@@ -681,38 +785,47 @@
     <canvas id="starsCanvas"></canvas>
     <canvas id="petalsCanvas"></canvas>
 
+    <!-- Animated Candles -->
+    <div class="candles">
+        <div class="candle"><div class="flame-container"><div class="flame-glow"></div><div class="flame"></div></div><div class="candle-body"></div></div>
+        <div class="candle"><div class="flame-container"><div class="flame-glow"></div><div class="flame"></div></div><div class="candle-body"></div></div>
+        <div class="candle"><div class="flame-container"><div class="flame-glow"></div><div class="flame"></div></div><div class="candle-body"></div></div>
+        <div class="candle"><div class="flame-container"><div class="flame-glow"></div><div class="flame"></div></div><div class="candle-body"></div></div>
+        <div class="candle"><div class="flame-container"><div class="flame-glow"></div><div class="flame"></div></div><div class="candle-body"></div></div>
+    </div>
+
     <!-- ============================================
-         OPENING - Cinematic
+         OPENING
          ============================================ -->
     <section class="opening">
-        <div class="opening-crown">&#128081;</div>
+        <div class="opening-rose">&#127801;</div>
         <div class="big-heart">&#10084;&#65039;</div>
         <h1 class="opening-title">
-            Happy Valentine's Day,<br>
+            Feliz D&iacute;a de San Valent&iacute;n,<br>
             <span class="name-reveal">Kennedy</span>
         </h1>
         <p class="opening-sub">
-            I built this little corner of the internet just for you.
-            Because you deserve a love letter that never fades.
+            Constru&iacute; este peque&ntilde;o rinc&oacute;n del internet solo para ti.
+            Porque mereces una carta de amor que nunca se borre.
         </p>
         <div class="scroll-hint">
-            <span>Keep scrolling</span>
+            <span>Sigue bajando</span>
             <div class="scroll-arrow"></div>
         </div>
     </section>
 
     <!-- ============================================
-         BLOOM FLOWER - Interactive
+         BLOOM
          ============================================ -->
     <section class="bloom-section" id="bloom">
-        <p class="bloom-prompt">Tap the flower, Kennedy</p>
+        <p class="bloom-prompt">Toca la rosa, Kennedy</p>
         <div class="bloom-container" id="bloomContainer">
             <div class="bloom-ring"></div>
             <div class="bloom-ring"></div>
             <div class="bloom-ring"></div>
             <div class="bloom-emoji">&#127801;</div>
         </div>
-        <p class="bloom-message">This one's for you, beautiful &#10084;&#65039;</p>
+        <p class="bloom-message">Esta es para ti, hermosa &#10084;&#65039;</p>
     </section>
 
     <!-- ============================================
@@ -724,86 +837,86 @@
             <span class="divider-icon">&#10024;</span>
             <div class="divider-line"></div>
         </div>
-        <p class="section-label">Written For You</p>
+        <p class="section-label">Escrito Para Ti</p>
 
         <div class="poem-card">
-            <h2 class="poem-title">My Everything</h2>
+            <h2 class="poem-title">Mi Todo</h2>
             <div class="poem-text">
                 <div class="stanza">
-                    Before you, my world was lines of code,<br>
-                    A screen that glowed but never showed<br>
-                    The warmth that only you could bring,<br>
-                    The way you make my whole heart sing.
+                    Antes de ti, mi mundo era solo c&oacute;digo,<br>
+                    Una pantalla que brillaba pero nunca mostraba<br>
+                    La calidez que solo t&uacute; pudiste traer,<br>
+                    La forma en que haces cantar mi coraz&oacute;n entero.
                 </div>
                 <div class="stanza">
-                    You are the sunrise I never set an alarm for,<br>
-                    The answer to a question I didn't know I was asking,<br>
-                    The calm in every storm I've weathered,<br>
-                    The reason every hard day still feels worth it.
+                    Eres el amanecer para el que nunca puse alarma,<br>
+                    La respuesta a una pregunta que no sab&iacute;a que hac&iacute;a,<br>
+                    La calma en cada tormenta que he vivido,<br>
+                    La raz&oacute;n por la que cada d&iacute;a dif&iacute;cil a&uacute;n vale la pena.
                 </div>
                 <div class="stanza">
-                    In a world of variables and unknowns,<br>
-                    You are my only constant, my true home.<br>
-                    No algorithm could ever calculate<br>
-                    How deeply, endlessly, I love my soulmate.
+                    En un mundo de variables y cosas inciertas,<br>
+                    T&uacute; eres mi &uacute;nica constante, mi verdadero hogar.<br>
+                    Ning&uacute;n algoritmo podr&iacute;a calcular<br>
+                    Cu&aacute;n profunda y eternamente amo a mi alma gemela.
                 </div>
             </div>
-            <p class="poem-signature">For you, always</p>
+            <p class="poem-signature">Para ti, siempre</p>
         </div>
 
         <div class="poem-card">
-            <h2 class="poem-title">You & I</h2>
+            <h2 class="poem-title">T&uacute; y Yo</h2>
             <div class="poem-text">
                 <div class="stanza">
-                    They say love is patient, love is kind,<br>
-                    But they forgot to mention how love<br>
-                    Can make a quiet room feel infinite,<br>
-                    How your laugh rewrites my entire day.
+                    Dicen que el amor es paciente, que el amor es bondad,<br>
+                    Pero olvidaron mencionar c&oacute;mo el amor<br>
+                    Puede hacer que un cuarto silencioso se sienta infinito,<br>
+                    C&oacute;mo tu risa reescribe todo mi d&iacute;a.
                 </div>
                 <div class="stanza">
-                    You are every beautiful thing<br>
-                    I never thought I deserved,<br>
-                    Every dream I was afraid to have,<br>
-                    Every prayer I didn't know was answered.
+                    T&uacute; eres cada cosa hermosa<br>
+                    Que nunca cre&iacute; merecer,<br>
+                    Cada sue&ntilde;o que ten&iacute;a miedo de tener,<br>
+                    Cada oraci&oacute;n que no sab&iacute;a que fue contestada.
                 </div>
                 <div class="stanza">
-                    So here I am, no fancy words enough,<br>
-                    No poem grand enough to hold this love.<br>
-                    Just me, just you, just us,<br>
-                    And that's more than enough.
+                    As&iacute; que aqu&iacute; estoy, sin palabras suficientes,<br>
+                    Ning&uacute;n poema tan grande para contener este amor.<br>
+                    Solo yo, solo t&uacute;, solo nosotros,<br>
+                    Y eso es m&aacute;s que suficiente.
                 </div>
             </div>
-            <p class="poem-signature">Yours, completely</p>
+            <p class="poem-signature">Tuyo, completamente</p>
         </div>
 
         <div class="poem-card">
             <h2 class="poem-title">Kennedy</h2>
             <div class="poem-text">
                 <div class="stanza">
-                    Say your name and the whole room softens,<br>
-                    Seven letters that rewrite my gravity.<br>
-                    The universe was patient, building you<br>
-                    From stardust and from Sunday morning light.
+                    Digo tu nombre y el mundo entero se suaviza,<br>
+                    Siete letras que reescriben mi gravedad.<br>
+                    El universo fue paciente, construy&eacute;ndote<br>
+                    De polvo de estrellas y luz de domingo por la ma&ntilde;ana.
                 </div>
                 <div class="stanza">
-                    I found forever in the way you sleep,<br>
-                    In how you hold your coffee with both hands,<br>
-                    In every little thing you do without thinking,<br>
-                    The things you'll never notice but I always will.
+                    Encontr&eacute; el para siempre en c&oacute;mo duermes,<br>
+                    En c&oacute;mo sostienes tu caf&eacute; con las dos manos,<br>
+                    En cada peque&ntilde;a cosa que haces sin pensarlo,<br>
+                    Las cosas que t&uacute; nunca notas pero yo siempre veo.
                 </div>
                 <div class="stanza">
-                    So let the world keep spinning, let it turn,<br>
-                    I already found what everyone is searching for.<br>
-                    She has your name. She has your face.<br>
-                    She is my favorite place.
+                    As&iacute; que deja que el mundo siga girando,<br>
+                    Yo ya encontr&eacute; lo que todos est&aacute;n buscando.<br>
+                    Ella tiene tu nombre. Ella tiene tu cara.<br>
+                    Ella es mi lugar favorito.
                 </div>
             </div>
-            <p class="poem-signature">Only yours, Anthony</p>
+            <p class="poem-signature">Solo tuyo, Anthony</p>
         </div>
     </section>
 
     <!-- ============================================
-         LOVE QUOTES
+         QUOTES
          ============================================ -->
     <section class="love-section quotes-section" id="quotes">
         <div class="section-divider">
@@ -811,36 +924,36 @@
             <span class="divider-icon">&#128156;</span>
             <div class="divider-line"></div>
         </div>
-        <p class="section-label">Words That Remind Me Of You</p>
-        <h2 class="quotes-title">Love Quotes</h2>
+        <p class="section-label">Palabras Que Me Recuerdan A Ti</p>
+        <h2 class="quotes-title">Frases de Amor</h2>
 
         <div class="quote-carousel" id="quoteCarousel">
             <div class="quote-slide active" data-index="0">
-                <p class="quote-text">"Whatever our souls are made of, his and mine are the same."</p>
+                <p class="quote-text">"De todas las almas que existen, la tuya y la m&iacute;a est&aacute;n hechas de lo mismo."</p>
                 <p class="quote-author">~Emily Bront&euml;</p>
             </div>
             <div class="quote-slide" data-index="1">
-                <p class="quote-text">"You know you're in love when you can't fall asleep because reality is finally better than your dreams."</p>
+                <p class="quote-text">"Sabes que est&aacute;s enamorado cuando no puedes dormir porque la realidad por fin es mejor que tus sue&ntilde;os."</p>
                 <p class="quote-author">~Dr. Seuss</p>
             </div>
             <div class="quote-slide" data-index="2">
-                <p class="quote-text">"In all the world, there is no heart for me like yours. In all the world, there is no love for you like mine."</p>
+                <p class="quote-text">"En todo el mundo, no hay coraz&oacute;n para m&iacute; como el tuyo. En todo el mundo, no hay amor para ti como el m&iacute;o."</p>
                 <p class="quote-author">~Maya Angelou</p>
             </div>
             <div class="quote-slide" data-index="3">
-                <p class="quote-text">"I saw that you were perfect, and so I loved you. Then I saw that you were not perfect and I loved you even more."</p>
+                <p class="quote-text">"Te vi perfecta, y te am&eacute;. Luego vi que no eras perfecta y te am&eacute; a&uacute;n m&aacute;s."</p>
                 <p class="quote-author">~Angelita Lim</p>
             </div>
             <div class="quote-slide" data-index="4">
-                <p class="quote-text">"If I had a flower for every time I thought of you, I could walk through my garden forever."</p>
+                <p class="quote-text">"Si tuviera una flor por cada vez que pienso en ti, podr&iacute;a caminar por mi jard&iacute;n para siempre."</p>
                 <p class="quote-author">~Alfred Tennyson</p>
             </div>
             <div class="quote-slide" data-index="5">
-                <p class="quote-text">"The best thing to hold onto in life is each other."</p>
+                <p class="quote-text">"Lo mejor a lo que puedes aferrarte en la vida es el uno al otro."</p>
                 <p class="quote-author">~Audrey Hepburn</p>
             </div>
             <div class="quote-slide" data-index="6">
-                <p class="quote-text">"I have waited for this opportunity for more than half a century, to repeat to you once again my vow of eternal fidelity and everlasting love."</p>
+                <p class="quote-text">"He esperado esta oportunidad por m&aacute;s de medio siglo, para repetirte una vez m&aacute;s mi voto de fidelidad eterna y amor eterno."</p>
                 <p class="quote-author">~Gabriel Garc&iacute;a M&aacute;rquez</p>
             </div>
         </div>
@@ -848,7 +961,7 @@
     </section>
 
     <!-- ============================================
-         REASONS I LOVE YOU
+         REASONS
          ============================================ -->
     <section class="love-section" id="reasons">
         <div class="section-divider">
@@ -856,49 +969,49 @@
             <span class="divider-icon">&#127801;</span>
             <div class="divider-line"></div>
         </div>
-        <p class="section-label">An Incomplete List</p>
-        <h2 class="reasons-title">Reasons I Love You</h2>
+        <p class="section-label">Una Lista Incompleta</p>
+        <h2 class="reasons-title">Razones Por Las Que Te Amo</h2>
 
         <div class="reasons-grid">
             <div class="reason-card">
                 <span class="reason-icon">&#10024;</span>
-                <p class="reason-text"><strong>Your smile</strong> . . . it could end wars and start revolutions. One look and my worst day becomes my best.</p>
+                <p class="reason-text"><strong>Tu sonrisa</strong> . . . podr&iacute;a detener guerras y empezar revoluciones. Una sola mirada y mi peor d&iacute;a se convierte en el mejor.</p>
             </div>
             <div class="reason-card">
                 <span class="reason-icon">&#128156;</span>
-                <p class="reason-text"><strong>Your heart</strong> . . . the way you care about people, the way you love without keeping score.</p>
+                <p class="reason-text"><strong>Tu coraz&oacute;n</strong> . . . la forma en que te preocupas por la gente, la forma en que amas sin llevar la cuenta.</p>
             </div>
             <div class="reason-card">
                 <span class="reason-icon">&#128081;</span>
-                <p class="reason-text"><strong>Your strength</strong> . . . you handle everything with a grace that leaves me in awe every single time.</p>
+                <p class="reason-text"><strong>Tu fuerza</strong> . . . manejas todo con una gracia que me deja asombrado cada vez.</p>
             </div>
             <div class="reason-card">
                 <span class="reason-icon">&#127770;</span>
-                <p class="reason-text"><strong>Your presence</strong> . . . being next to you feels like coming home after the longest day.</p>
+                <p class="reason-text"><strong>Tu presencia</strong> . . . estar a tu lado se siente como llegar a casa despu&eacute;s del d&iacute;a m&aacute;s largo.</p>
             </div>
             <div class="reason-card">
                 <span class="reason-icon">&#128293;</span>
-                <p class="reason-text"><strong>Your passion</strong> . . . the way your eyes light up when you talk about things you love.</p>
+                <p class="reason-text"><strong>Tu pasi&oacute;n</strong> . . . la forma en que tus ojos se iluminan cuando hablas de las cosas que amas.</p>
             </div>
             <div class="reason-card">
                 <span class="reason-icon">&#127775;</span>
-                <p class="reason-text"><strong>Your laugh</strong> . . . the most beautiful sound in any room. I'd do anything to hear it every day.</p>
+                <p class="reason-text"><strong>Tu risa</strong> . . . el sonido m&aacute;s hermoso en cualquier lugar. Har&iacute;a lo que fuera por escucharla todos los d&iacute;as.</p>
             </div>
             <div class="reason-card">
                 <span class="reason-icon">&#127800;</span>
-                <p class="reason-text"><strong>Your patience</strong> . . . with me, with life, with everything. You make hard things feel manageable.</p>
+                <p class="reason-text"><strong>Tu paciencia</strong> . . . conmigo, con la vida, con todo. Haces que las cosas dif&iacute;ciles se sientan posibles.</p>
             </div>
             <div class="reason-card">
                 <span class="reason-icon">&#128171;</span>
-                <p class="reason-text"><strong>You chose me</strong> . . . out of everyone in this world, you chose me. And I'll spend my life making sure you never regret it.</p>
+                <p class="reason-text"><strong>Me elegiste</strong> . . . de todas las personas en este mundo, me elegiste a m&iacute;. Y voy a pasar mi vida asegur&aacute;ndome de que nunca te arrepientas.</p>
             </div>
             <div class="reason-card">
                 <span class="reason-icon">&#9749;</span>
-                <p class="reason-text"><strong>The little things</strong> . . . how you hold your phone with both hands, the face you make when you're focused, how you say my name.</p>
+                <p class="reason-text"><strong>Las peque&ntilde;as cosas</strong> . . . c&oacute;mo sostienes tu tel&eacute;fono con las dos manos, la cara que pones cuando te concentras, c&oacute;mo dices mi nombre.</p>
             </div>
             <div class="reason-card">
                 <span class="reason-icon">&#127752;</span>
-                <p class="reason-text"><strong>You make me better</strong> . . . I'm a better person because of you. Not because you asked me to change, but because you make me want to.</p>
+                <p class="reason-text"><strong>Me haces mejor</strong> . . . soy mejor persona por ti. No porque me pediste que cambiara, sino porque me haces querer hacerlo.</p>
             </div>
         </div>
     </section>
@@ -912,36 +1025,36 @@
             <span class="divider-icon">&#128140;</span>
             <div class="divider-line"></div>
         </div>
-        <p class="section-label">From My Heart</p>
+        <p class="section-label">Desde Mi Coraz&oacute;n</p>
 
         <div class="letter-container">
-            <p class="letter-greeting">My dearest Kennedy,</p>
+            <p class="letter-greeting">Mi querida Kennedy,</p>
             <div class="letter-body">
                 <p>
-                    If I could give you one thing in this life, I'd give you the ability to see yourself through my eyes.
-                    Only then would you realize how special you are to me.
+                    Si pudiera darte una sola cosa en esta vida, te dar&iacute;a la habilidad de verte a trav&eacute;s de mis ojos.
+                    Solo entonces entender&iacute;as lo especial que eres para m&iacute;.
                 </p>
                 <p>
-                    You walked into my life and suddenly everything made sense. The late nights, the hard days,
-                    the moments where I felt lost, they were all leading me to you. You are the plot twist
-                    I never saw coming but always needed.
+                    Llegaste a mi vida y de repente todo tuvo sentido. Las noches largas, los d&iacute;as dif&iacute;ciles,
+                    los momentos en que me sent&iacute; perdido, todos me estaban llevando hacia ti. Eres el giro
+                    inesperado que nunca vi venir pero que siempre necesit&eacute;.
                 </p>
                 <p>
-                    I know I'm not perfect. I know I don't always say the right things or do everything right.
-                    But know this: every single day, I wake up wanting to be better. For you, for us,
-                    for the future we're building together.
+                    S&eacute; que no soy perfecto. S&eacute; que no siempre digo las cosas correctas ni hago todo bien.
+                    Pero que sepas esto: cada d&iacute;a, me despierto queriendo ser mejor. Por ti, por nosotros,
+                    por el futuro que estamos construyendo juntos.
                 </p>
                 <p>
-                    You are my best friend, my biggest supporter, my safe place, and the love of my life.
-                    There is no version of my future that doesn't have you in it.
+                    Eres mi mejor amiga, mi mayor apoyo, mi lugar seguro, y el amor de mi vida.
+                    No hay ninguna versi&oacute;n de mi futuro que no te tenga a ti.
                 </p>
                 <p>
-                    Happy Valentine's Day, Kennedy. Today, tomorrow, and every day after, I choose you.
+                    Feliz D&iacute;a de San Valent&iacute;n, Kennedy. Hoy, ma&ntilde;ana, y cada d&iacute;a despu&eacute;s, te elijo a ti.
                 </p>
             </div>
             <div class="letter-closing">
-                <p>With all my love,</p>
-                <p>Forever and always,</p>
+                <p>Con todo mi amor,</p>
+                <p>Por siempre y para siempre,</p>
                 <span class="signature">Anthony</span>
             </div>
         </div>
@@ -956,64 +1069,64 @@
             <span class="divider-icon">&#128142;</span>
             <div class="divider-line"></div>
         </div>
-        <p class="section-label">My Promises To You</p>
-        <h2 class="promise-title">Always & Forever</h2>
+        <p class="section-label">Mis Promesas Para Ti</p>
+        <h2 class="promise-title">Siempre y Para Siempre</h2>
 
         <div class="promise-cards">
             <div class="promise-card">
                 <div class="promise-emoji">&#127801;</div>
-                <p class="promise-text">I promise to love you on the hard days just as much as the easy ones.</p>
+                <p class="promise-text">Te prometo amarte en los d&iacute;as dif&iacute;ciles igual que en los f&aacute;ciles.</p>
             </div>
             <div class="promise-card">
                 <div class="promise-emoji">&#127769;</div>
-                <p class="promise-text">I promise to be your safe place when the world feels too heavy.</p>
+                <p class="promise-text">Te prometo ser tu lugar seguro cuando el mundo se sienta muy pesado.</p>
             </div>
             <div class="promise-card">
                 <div class="promise-emoji">&#128588;</div>
-                <p class="promise-text">I promise to never stop trying to make you laugh, even when my jokes are terrible.</p>
+                <p class="promise-text">Te prometo nunca dejar de intentar hacerte re&iacute;r, aunque mis chistes sean malísimos.</p>
             </div>
             <div class="promise-card">
                 <div class="promise-emoji">&#127793;</div>
-                <p class="promise-text">I promise to build a life with you that we're both proud of.</p>
+                <p class="promise-text">Te prometo construir una vida contigo de la que los dos estemos orgullosos.</p>
             </div>
             <div class="promise-card">
                 <div class="promise-emoji">&#128142;</div>
-                <p class="promise-text">I promise to choose you, every morning, every evening, every moment in between.</p>
+                <p class="promise-text">Te prometo elegirte cada ma&ntilde;ana, cada noche, cada momento entre ellos.</p>
             </div>
             <div class="promise-card">
                 <div class="promise-emoji">&#127752;</div>
-                <p class="promise-text">I promise to grow with you, not apart. Whatever comes, we face it together.</p>
+                <p class="promise-text">Te prometo crecer contigo, no separarnos. Lo que venga, lo enfrentamos juntos.</p>
             </div>
         </div>
     </section>
 
     <!-- ============================================
-         GRAND FINALE
+         FINALE
          ============================================ -->
     <section class="finale">
         <div class="finale-heart">&#10084;&#65039;</div>
         <h2 class="finale-text">
-            <span class="glow">Kennedy, you are my everything.</span>
+            <span class="glow">Kennedy, eres mi todo.</span>
         </h2>
         <p class="finale-sub">
-            Today and every day, I love you more than words on any screen could ever say.
+            Hoy y cada d&iacute;a, te amo m&aacute;s de lo que las palabras en cualquier pantalla podr&iacute;an decir.
         </p>
         <div class="finale-xo">&#10084;&#65039; &#128139; &#10084;&#65039;</div>
-        <a href="index.html" class="back-link">&larr; Back to portfolio</a>
+        <a href="index.html" class="back-link">&larr; Volver al portafolio</a>
     </section>
 
     <!-- Music -->
     <audio id="bgMusic" loop preload="auto">
         <source src="Music/Mitski - My Love Mine All Mine (Official Video).mp3" type="audio/mpeg">
     </audio>
-    <button class="music-btn" id="musicBtn" aria-label="Play music">&#9835;</button>
+    <button class="music-btn" id="musicBtn" aria-label="Reproducir m&uacute;sica">&#9835;</button>
 
     <script>
     (function() {
         'use strict';
 
         // ============================================
-        // STARFIELD - twinkling background stars
+        // STARFIELD - warm golden & red tones
         // ============================================
         const starsCanvas = document.getElementById('starsCanvas');
         const sCtx = starsCanvas.getContext('2d');
@@ -1026,16 +1139,15 @@
         resizeStars();
         window.addEventListener('resize', resizeStars);
 
-        const starCount = Math.min(200, Math.floor((window.innerWidth * window.innerHeight) / 4000));
+        const starCount = Math.min(180, Math.floor((window.innerWidth * window.innerHeight) / 4500));
         for (let i = 0; i < starCount; i++) {
             stars.push({
                 x: Math.random() * starsCanvas.width,
                 y: Math.random() * starsCanvas.height,
-                r: Math.random() * 1.2 + 0.3,
-                a: Math.random(),
-                speed: Math.random() * 0.005 + 0.002,
+                r: Math.random() * 1.1 + 0.3,
+                speed: Math.random() * 0.004 + 0.002,
                 offset: Math.random() * Math.PI * 2,
-                color: ['#fde8ef', '#f472b6', '#c4b5fd', '#e8c88a', '#ffffff'][Math.floor(Math.random() * 5)]
+                color: ['#f5e6d3', '#dbb766', '#c0392b', '#d4707a', '#f5c96c', '#ffffff'][Math.floor(Math.random() * 6)]
             });
         }
 
@@ -1046,14 +1158,14 @@
                 sCtx.beginPath();
                 sCtx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
                 sCtx.fillStyle = s.color;
-                sCtx.globalAlpha = twinkle * 0.6;
+                sCtx.globalAlpha = twinkle * 0.5;
                 sCtx.fill();
             });
             sCtx.globalAlpha = 1;
         }
 
         // ============================================
-        // PETAL RAIN - falling rose petals
+        // PETAL RAIN - deep red/burgundy/gold
         // ============================================
         const petalsCanvas = document.getElementById('petalsCanvas');
         const pCtx = petalsCanvas.getContext('2d');
@@ -1066,21 +1178,21 @@
         resizePetals();
         window.addEventListener('resize', resizePetals);
 
-        const petalColors = ['#e8457e', '#f472b6', '#fbcfe8', '#c4b5fd', '#e8c88a'];
-        const petalCount = Math.min(25, Math.floor(window.innerWidth / 20));
+        const petalColors = ['#8b1a1a', '#c0392b', '#a02020', '#5c1018', '#d4707a', '#dbb766'];
+        const petalCount = Math.min(30, Math.floor(window.innerWidth / 16));
 
         for (let i = 0; i < petalCount; i++) {
             petals.push({
                 x: Math.random() * petalsCanvas.width,
                 y: Math.random() * petalsCanvas.height - petalsCanvas.height,
-                size: Math.random() * 6 + 3,
-                speedY: Math.random() * 0.6 + 0.15,
-                speedX: (Math.random() - 0.5) * 0.3,
+                size: Math.random() * 7 + 3,
+                speedY: Math.random() * 0.5 + 0.12,
+                speedX: (Math.random() - 0.5) * 0.25,
                 rot: Math.random() * Math.PI * 2,
-                rotSpeed: (Math.random() - 0.5) * 0.015,
+                rotSpeed: (Math.random() - 0.5) * 0.012,
                 wobble: Math.random() * Math.PI * 2,
-                wobbleSpeed: Math.random() * 0.02 + 0.008,
-                opacity: Math.random() * 0.25 + 0.05,
+                wobbleSpeed: Math.random() * 0.015 + 0.006,
+                opacity: Math.random() * 0.3 + 0.06,
                 color: petalColors[Math.floor(Math.random() * petalColors.length)]
             });
         }
@@ -1090,7 +1202,7 @@
             petals.forEach(p => {
                 p.y += p.speedY;
                 p.wobble += p.wobbleSpeed;
-                p.x += p.speedX + Math.sin(p.wobble) * 0.4;
+                p.x += p.speedX + Math.sin(p.wobble) * 0.35;
                 p.rot += p.rotSpeed;
 
                 if (p.y > petalsCanvas.height + 20) {
@@ -1104,7 +1216,7 @@
                 pCtx.globalAlpha = p.opacity;
                 pCtx.fillStyle = p.color;
 
-                // Draw petal shape
+                // Petal shape
                 pCtx.beginPath();
                 pCtx.ellipse(0, 0, p.size, p.size * 0.55, 0, 0, Math.PI * 2);
                 pCtx.fill();
@@ -1116,7 +1228,6 @@
             });
         }
 
-        // Combined animation loop
         function animate(t) {
             drawStars(t);
             drawPetals();
@@ -1124,13 +1235,25 @@
         }
         requestAnimationFrame(animate);
 
-        // Re-measure stars on scroll (for full page height)
         let resizeTimeout;
         const ro = new ResizeObserver(() => {
             clearTimeout(resizeTimeout);
             resizeTimeout = setTimeout(resizeStars, 200);
         });
         ro.observe(document.body);
+
+        // ============================================
+        // CANDLE FLICKER RANDOMNESS
+        // ============================================
+        const flames = document.querySelectorAll('.flame');
+        flames.forEach(flame => {
+            setInterval(() => {
+                const h = 16 + Math.random() * 10;
+                const w = 8 + Math.random() * 4;
+                flame.style.height = h + 'px';
+                flame.style.width = w + 'px';
+            }, 120);
+        });
 
         // ============================================
         // SCROLL REVEAL
@@ -1144,7 +1267,6 @@
                 if (entry.isIntersecting) entry.target.classList.add('visible');
             });
         }, { threshold: 0.08 });
-
         sections.forEach(s => revealObserver.observe(s));
 
         const cardObserver = new IntersectionObserver((entries) => {
@@ -1152,7 +1274,6 @@
                 if (entry.isIntersecting) entry.target.classList.add('visible');
             });
         }, { threshold: 0.05 });
-
         reasonCards.forEach((c, i) => { c.style.transitionDelay = `${i * 0.07}s`; cardObserver.observe(c); });
         promiseCards.forEach((c, i) => { c.style.transitionDelay = `${i * 0.09}s`; cardObserver.observe(c); });
 
@@ -1167,18 +1288,17 @@
             bloomed = true;
             bloomContainer.classList.add('bloomed');
 
-            // Burst of petals from the flower
             const rect = bloomContainer.getBoundingClientRect();
             const cx = rect.left + rect.width / 2;
             const cy = rect.top + rect.height / 2;
-            const burstEmoji = ['\uD83C\uDF39', '\uD83C\uDF3A', '\uD83C\uDF38', '\uD83C\uDF37', '\u2728', '\uD83E\uDE77', '\uD83D\uDC96'];
-            for (let i = 0; i < 15; i++) {
+            const burstEmoji = ['\uD83C\uDF39', '\uD83C\uDF3A', '\uD83C\uDF38', '\uD83C\uDF37', '\u2728', '\uD83E\uDE77', '\uD83D\uDC96', '\uD83D\uDD6F\uFE0F'];
+            for (let i = 0; i < 18; i++) {
                 const el = document.createElement('div');
                 el.style.cssText = `position:fixed;pointer-events:none;z-index:100;font-size:${1 + Math.random()}rem;left:${cx}px;top:${cy}px;`;
                 el.textContent = burstEmoji[Math.floor(Math.random() * burstEmoji.length)];
                 document.body.appendChild(el);
-                const angle = (Math.PI * 2 / 15) * i + Math.random() * 0.5;
-                const dist = 60 + Math.random() * 80;
+                const angle = (Math.PI * 2 / 18) * i + Math.random() * 0.4;
+                const dist = 60 + Math.random() * 90;
                 const dx = Math.cos(angle) * dist;
                 const dy = Math.sin(angle) * dist;
                 el.animate([
@@ -1215,7 +1335,6 @@
         let autoInt = setInterval(() => goToSlide((currentSlide + 1) % slides.length), 4500);
         function resetAuto() { clearInterval(autoInt); autoInt = setInterval(() => goToSlide((currentSlide + 1) % slides.length), 4500); }
 
-        // Swipe
         let tx = 0;
         const carousel = document.getElementById('quoteCarousel');
         carousel.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
@@ -1230,7 +1349,7 @@
         // ============================================
         // SPARKLE ON TOUCH
         // ============================================
-        const sparkles = ['\u2764\uFE0F', '\uD83D\uDC96', '\u2728', '\uD83C\uDF39', '\uD83D\uDC97', '\uD83D\uDC95', '\uD83E\uDE77', '\uD83C\uDF38', '\uD83D\uDCAB', '\u2763\uFE0F'];
+        const sparkles = ['\u2764\uFE0F', '\uD83D\uDC96', '\u2728', '\uD83C\uDF39', '\uD83D\uDD6F\uFE0F', '\uD83D\uDC95', '\uD83E\uDE77', '\uD83C\uDF38', '\uD83D\uDCAB'];
 
         function doSparkle(x, y) {
             for (let i = 0; i < 4; i++) {
