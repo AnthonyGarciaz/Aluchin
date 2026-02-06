@@ -4,73 +4,78 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>For Kennedy</title>
-    <meta name="theme-color" content="#1a0a14">
+    <meta name="theme-color" content="#0d0509">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        /* ============================================
-           VALENTINE'S PAGE - A Love Letter in Code
-           ============================================ */
-
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
             --rose: #e8457e;
             --rose-light: #f472b6;
+            --rose-pastel: #fbcfe8;
             --rose-deep: #be185d;
-            --rose-glow: rgba(232, 69, 126, 0.4);
-            --blush: #fce7f3;
+            --rose-glow: rgba(232, 69, 126, 0.35);
+            --blush: #fdf2f8;
             --gold: #d4a056;
-            --gold-light: #f5deb3;
-            --bg-dark: #1a0a14;
-            --bg-section: #120810;
-            --text-light: #fde8ef;
-            --text-soft: #d4a0b8;
-            --text-muted: #8a5070;
+            --gold-soft: #e8c88a;
+            --lavender: #c4b5fd;
+            --lavender-glow: rgba(196, 181, 253, 0.3);
+            --peach: #fed7aa;
+            --bg: #0d0509;
+            --bg-card: rgba(20, 8, 14, 0.7);
+            --text: #fdf2f8;
+            --text-soft: #e8b4c8;
+            --text-muted: #9a5070;
             --font-display: 'Playfair Display', Georgia, serif;
-            --font-body: 'Lora', Georgia, serif;
-            --font-ui: 'Inter', sans-serif;
+            --font-body: 'Cormorant Garamond', Georgia, serif;
+            --font-ui: 'Inter', -apple-system, sans-serif;
         }
 
-        html {
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
-        }
+        html { scroll-behavior: smooth; -webkit-overflow-scrolling: touch; }
 
         body {
             font-family: var(--font-body);
-            background: var(--bg-dark);
-            color: var(--text-light);
+            background: var(--bg);
+            color: var(--text);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
-            min-height: 100vh;
         }
 
         /* ============================================
-           Floating Hearts Canvas
+           CANVAS LAYERS
            ============================================ */
-        #hearts-canvas {
+        canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+        #starsCanvas { z-index: 0; }
+        #petalsCanvas { z-index: 2; }
+
+        /* ============================================
+           AURORA GRADIENT BACKGROUND
+           ============================================ */
+        .aurora {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
+            top: 0; left: 0; right: 0; bottom: 0;
             z-index: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(232, 69, 126, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 60% at 80% 20%, rgba(196, 181, 253, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse 70% 40% at 50% 80%, rgba(212, 160, 86, 0.05) 0%, transparent 50%);
+            animation: auroraShift 12s ease-in-out infinite alternate;
+        }
+        @keyframes auroraShift {
+            0% { opacity: 0.6; filter: hue-rotate(0deg); }
+            100% { opacity: 1; filter: hue-rotate(15deg); }
         }
 
         /* ============================================
-           Opening - The Grand Entrance
+           OPENING - Cinematic Entrance
            ============================================ */
         .opening {
             min-height: 100vh;
+            min-height: 100dvh;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -78,302 +83,352 @@
             text-align: center;
             padding: 2rem;
             position: relative;
-            z-index: 1;
-            overflow: hidden;
+            z-index: 3;
         }
 
-        .opening::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, var(--rose-glow) 0%, transparent 70%);
-            transform: translate(-50%, -50%);
-            opacity: 0.3;
-            animation: breathe 4s ease-in-out infinite;
+        .opening-crown {
+            font-size: 2.5rem;
+            opacity: 0;
+            animation: crownDrop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s forwards;
+            filter: drop-shadow(0 0 12px rgba(212, 160, 86, 0.5));
         }
-
-        @keyframes breathe {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
-            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.5; }
+        @keyframes crownDrop {
+            from { opacity: 0; transform: translateY(-40px) scale(0.5); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .big-heart {
-            font-size: 4rem;
-            animation: heartbeat 1.2s ease-in-out infinite;
-            margin-bottom: 2rem;
-            filter: drop-shadow(0 0 20px var(--rose-glow));
+            font-size: 4.5rem;
+            margin: 0.75rem 0 1.5rem;
+            filter: drop-shadow(0 0 25px var(--rose-glow));
             opacity: 0;
-            animation: heartEntrance 1s ease-out 0.3s forwards, heartbeat 1.2s ease-in-out 1.3s infinite;
+            animation: heartPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.6s forwards, heartbeat 1.3s ease-in-out 1.3s infinite;
         }
-
-        @keyframes heartEntrance {
-            from { opacity: 0; transform: scale(0) rotate(-10deg); }
-            to { opacity: 1; transform: scale(1) rotate(0deg); }
+        @keyframes heartPop {
+            from { opacity: 0; transform: scale(0); }
+            to { opacity: 1; transform: scale(1); }
         }
-
         @keyframes heartbeat {
             0% { transform: scale(1); }
-            14% { transform: scale(1.15); }
-            28% { transform: scale(1); }
-            42% { transform: scale(1.1); }
+            15% { transform: scale(1.18); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.12); }
             70% { transform: scale(1); }
         }
 
         .opening-title {
             font-family: var(--font-display);
-            font-size: clamp(2rem, 8vw, 4rem);
+            font-size: clamp(2.25rem, 9vw, 4.5rem);
             font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 1rem;
+            line-height: 1.15;
+            margin-bottom: 1.25rem;
             opacity: 0;
-            animation: fadeUp 1s ease-out 0.8s forwards;
+            animation: fadeUp 1s ease-out 1s forwards;
         }
 
-        .opening-title .highlight {
-            background: linear-gradient(135deg, var(--rose), var(--rose-light), var(--gold));
+        .name-reveal {
+            display: inline-block;
+            position: relative;
+            background: linear-gradient(135deg, var(--rose), var(--rose-light), var(--gold-soft), var(--lavender), var(--rose));
+            background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            animation: nameShimmer 4s ease-in-out infinite;
+        }
+        .name-reveal::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            animation: underlineGrow 1.5s ease-out 1.8s both;
+        }
+        @keyframes nameShimmer {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes underlineGrow {
+            from { transform: scaleX(0); }
+            to { transform: scaleX(1); }
         }
 
-        .opening-subtitle {
-            font-family: var(--font-display);
-            font-style: italic;
-            font-size: clamp(1rem, 4vw, 1.5rem);
+        .opening-sub {
+            font-family: var(--font-body);
+            font-size: clamp(1.05rem, 4vw, 1.4rem);
+            font-weight: 300;
             color: var(--text-soft);
+            max-width: 480px;
+            line-height: 1.7;
             opacity: 0;
-            animation: fadeUp 1s ease-out 1.3s forwards;
-            max-width: 500px;
+            animation: fadeUp 1s ease-out 1.5s forwards;
         }
 
         .scroll-hint {
             position: absolute;
             bottom: 2rem;
             opacity: 0;
-            animation: fadeUp 1s ease-out 2s forwards;
+            animation: fadeUp 0.8s ease-out 2.5s forwards;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
         }
-
         .scroll-hint span {
-            display: block;
             font-family: var(--font-ui);
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            letter-spacing: 2px;
+            font-size: 0.65rem;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            margin-bottom: 0.5rem;
+            color: var(--text-muted);
         }
-
         .scroll-arrow {
-            width: 20px;
-            height: 20px;
-            border-right: 2px solid var(--rose);
-            border-bottom: 2px solid var(--rose);
+            width: 18px; height: 18px;
+            border-right: 1.5px solid var(--rose);
+            border-bottom: 1.5px solid var(--rose);
             transform: rotate(45deg);
-            margin: 0 auto;
-            animation: bounce 2s ease-in-out infinite;
+            animation: arrowBounce 2s ease-in-out infinite;
         }
-
-        @keyframes bounce {
-            0%, 100% { transform: rotate(45deg) translateY(0); }
-            50% { transform: rotate(45deg) translateY(8px); }
+        @keyframes arrowBounce {
+            0%, 100% { transform: rotate(45deg) translateY(0); opacity: 0.5; }
+            50% { transform: rotate(45deg) translateY(6px); opacity: 1; }
         }
-
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         /* ============================================
-           Section Base Styles
+           SECTION BASE
            ============================================ */
         .love-section {
-            padding: 5rem 1.5rem;
+            padding: 4.5rem 1.5rem;
             position: relative;
-            z-index: 1;
-            max-width: 700px;
+            z-index: 3;
+            max-width: 680px;
             margin: 0 auto;
             opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+            transform: translateY(50px);
+            transition: opacity 1s ease, transform 1s ease;
         }
-
-        .love-section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .love-section.visible { opacity: 1; transform: translateY(0); }
 
         .section-divider {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 1rem;
-            margin-bottom: 3rem;
+            margin-bottom: 2.5rem;
         }
-
         .divider-line {
-            width: 60px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--rose), transparent);
+            width: 50px; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--rose-light), transparent);
         }
-
-        .divider-heart {
-            color: var(--rose);
-            font-size: 0.875rem;
-            opacity: 0.7;
-        }
-
+        .divider-icon { font-size: 0.75rem; opacity: 0.6; }
         .section-label {
             font-family: var(--font-ui);
-            font-size: 0.6875rem;
-            letter-spacing: 3px;
+            font-size: 0.625rem;
+            font-weight: 500;
+            letter-spacing: 3.5px;
             text-transform: uppercase;
             color: var(--rose);
             text-align: center;
-            margin-bottom: 1rem;
+            margin-bottom: 0.75rem;
         }
 
         /* ============================================
-           Poem Section
+           TYPEWRITER POEM
            ============================================ */
         .poem-card {
-            background: linear-gradient(135deg, rgba(232, 69, 126, 0.06), rgba(212, 160, 86, 0.04));
-            border: 1px solid rgba(232, 69, 126, 0.15);
-            border-radius: 24px;
-            padding: 2.5rem 2rem;
+            background: var(--bg-card);
+            border: 1px solid rgba(232, 69, 126, 0.1);
+            border-radius: 28px;
+            padding: 2.5rem 1.75rem;
             margin-bottom: 2rem;
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
-
         .poem-card::before {
-            content: '\201C';
+            content: '';
             position: absolute;
-            top: -10px;
-            left: 15px;
-            font-family: var(--font-display);
-            font-size: 8rem;
-            color: var(--rose);
-            opacity: 0.07;
-            line-height: 1;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--rose-pastel), transparent);
+            opacity: 0.3;
         }
-
+        .poem-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 28px;
+            background: radial-gradient(circle at 50% 0%, rgba(232, 69, 126, 0.04), transparent 60%);
+            pointer-events: none;
+        }
         .poem-title {
             font-family: var(--font-display);
-            font-size: clamp(1.25rem, 5vw, 1.75rem);
+            font-size: clamp(1.35rem, 5vw, 1.8rem);
             font-weight: 600;
+            font-style: italic;
             color: var(--rose-light);
             margin-bottom: 1.5rem;
             text-align: center;
         }
-
         .poem-text {
             font-family: var(--font-body);
             font-style: italic;
-            font-size: clamp(0.9375rem, 3.5vw, 1.0625rem);
-            line-height: 2;
-            color: var(--text-light);
+            font-size: clamp(1rem, 3.8vw, 1.15rem);
+            font-weight: 300;
+            line-height: 2.1;
+            color: var(--text);
             text-align: center;
         }
-
-        .poem-text .stanza {
-            margin-bottom: 1.5rem;
-        }
-
-        .poem-text .stanza:last-child {
-            margin-bottom: 0;
-        }
-
+        .poem-text .stanza { margin-bottom: 1.75rem; }
+        .poem-text .stanza:last-child { margin-bottom: 0; }
         .poem-signature {
             text-align: right;
             margin-top: 1.5rem;
             font-family: var(--font-display);
             font-style: italic;
-            color: var(--gold);
-            font-size: 0.9375rem;
+            font-weight: 500;
+            color: var(--gold-soft);
+            font-size: 0.95rem;
         }
 
         /* ============================================
-           Love Quotes Carousel
+           INTERACTIVE BLOOM FLOWER
            ============================================ */
-        .quotes-section {
+        .bloom-section {
             text-align: center;
+            padding: 3rem 1.5rem;
+            position: relative;
+            z-index: 3;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+        .bloom-prompt {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-size: clamp(1rem, 4vw, 1.25rem);
+            color: var(--text-soft);
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+        .bloom-section.visible .bloom-prompt { opacity: 1; }
+        .bloom-container {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            margin: 0 auto;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .bloom-ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 1px solid rgba(232, 69, 126, 0.2);
+            animation: bloomPulse 3s ease-in-out infinite;
+        }
+        .bloom-ring:nth-child(2) { inset: -15px; animation-delay: 0.5s; border-color: rgba(196, 181, 253, 0.15); }
+        .bloom-ring:nth-child(3) { inset: -30px; animation-delay: 1s; border-color: rgba(212, 160, 86, 0.1); }
+        @keyframes bloomPulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.05); opacity: 1; }
+        }
+        .bloom-emoji {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .bloom-container.bloomed .bloom-emoji {
+            font-size: 5.5rem;
+            filter: drop-shadow(0 0 20px rgba(232, 69, 126, 0.5));
+        }
+        .bloom-container.bloomed .bloom-ring { animation: bloomBurst 0.6s ease-out forwards; }
+        @keyframes bloomBurst {
+            to { transform: scale(1.8); opacity: 0; }
+        }
+        .bloom-message {
+            font-family: var(--font-display);
+            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--rose-light);
+            margin-top: 1.5rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.8s ease 0.3s;
+        }
+        .bloom-container.bloomed ~ .bloom-message {
+            opacity: 1;
+            transform: translateY(0);
         }
 
+        /* ============================================
+           QUOTES CAROUSEL (upgraded)
+           ============================================ */
+        .quotes-section { text-align: center; }
         .quotes-title {
             font-family: var(--font-display);
             font-size: clamp(1.5rem, 5vw, 2rem);
             font-weight: 600;
             margin-bottom: 2rem;
-            color: var(--text-light);
         }
-
         .quote-carousel {
             position: relative;
-            min-height: 200px;
+            min-height: 220px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-
         .quote-slide {
             position: absolute;
             width: 100%;
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s ease, transform 0.8s ease;
-            padding: 0 1rem;
+            transform: translateY(20px) scale(0.97);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 0 0.75rem;
         }
-
-        .quote-slide.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
+        .quote-slide.active { opacity: 1; transform: translateY(0) scale(1); }
         .quote-text {
             font-family: var(--font-display);
             font-style: italic;
-            font-size: clamp(1.125rem, 4vw, 1.375rem);
-            line-height: 1.7;
-            color: var(--text-light);
+            font-size: clamp(1.1rem, 4vw, 1.35rem);
+            line-height: 1.75;
+            color: var(--text);
             margin-bottom: 1rem;
         }
-
         .quote-author {
             font-family: var(--font-ui);
-            font-size: 0.8125rem;
-            color: var(--gold);
+            font-size: 0.75rem;
+            font-weight: 400;
+            color: var(--gold-soft);
             letter-spacing: 1px;
         }
-
-        .quote-dots {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-top: 2rem;
-        }
-
+        .quote-dots { display: flex; justify-content: center; gap: 0.5rem; margin-top: 2rem; }
         .quote-dot {
-            width: 8px;
-            height: 8px;
+            width: 6px; height: 6px;
             border-radius: 50%;
             background: var(--text-muted);
-            border: none;
-            cursor: pointer;
+            border: none; cursor: pointer;
             transition: all 0.3s ease;
             padding: 0;
         }
-
         .quote-dot.active {
             background: var(--rose);
-            box-shadow: 0 0 8px var(--rose-glow);
-            transform: scale(1.3);
+            box-shadow: 0 0 10px var(--rose-glow);
+            width: 20px;
+            border-radius: 10px;
         }
 
         /* ============================================
-           Reasons I Love You
+           REASONS - glass cards
            ============================================ */
         .reasons-title {
             font-family: var(--font-display);
@@ -382,160 +437,125 @@
             text-align: center;
             margin-bottom: 2rem;
         }
-
-        .reasons-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-
+        .reasons-grid { display: grid; grid-template-columns: 1fr; gap: 0.875rem; }
         .reason-card {
-            background: linear-gradient(135deg, rgba(232, 69, 126, 0.05), rgba(255, 255, 255, 0.02));
-            border: 1px solid rgba(232, 69, 126, 0.1);
-            border-radius: 16px;
+            background: var(--bg-card);
+            border: 1px solid rgba(232, 69, 126, 0.08);
+            border-radius: 20px;
             padding: 1.25rem 1.5rem;
             display: flex;
             align-items: flex-start;
             gap: 1rem;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             opacity: 0;
-            transform: translateX(-20px);
-            transition: all 0.5s ease;
+            transform: translateX(-30px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        .reason-card.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .reason-icon {
-            font-size: 1.25rem;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        .reason-text {
-            font-size: 0.9375rem;
-            line-height: 1.6;
-            color: var(--text-soft);
-        }
-
-        .reason-text strong {
-            color: var(--text-light);
-        }
+        .reason-card.visible { opacity: 1; transform: translateX(0); }
+        .reason-card:nth-child(even) { transform: translateX(30px); }
+        .reason-card:nth-child(even).visible { transform: translateX(0); }
+        .reason-icon { font-size: 1.35rem; flex-shrink: 0; margin-top: 1px; }
+        .reason-text { font-size: 1rem; line-height: 1.65; color: var(--text-soft); font-weight: 300; }
+        .reason-text strong { color: var(--text); font-weight: 500; }
 
         /* ============================================
-           Love Letter Section
+           LOVE LETTER - handwritten feel
            ============================================ */
         .letter-container {
-            background: linear-gradient(180deg, rgba(253, 232, 239, 0.03), rgba(212, 160, 86, 0.03));
-            border: 1px solid rgba(212, 160, 86, 0.15);
-            border-radius: 24px;
-            padding: 2.5rem 2rem;
+            background: linear-gradient(180deg, rgba(253, 232, 239, 0.03), rgba(212, 160, 86, 0.02));
+            border: 1px solid rgba(212, 160, 86, 0.12);
+            border-radius: 28px;
+            padding: 2.5rem 1.75rem;
             position: relative;
+            overflow: hidden;
         }
-
+        .letter-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-soft), transparent);
+            opacity: 0.4;
+        }
         .letter-container::after {
             content: '';
             position: absolute;
-            bottom: -1px;
-            left: 10%;
-            right: 10%;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            bottom: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-soft), transparent);
+            opacity: 0.2;
         }
-
         .letter-greeting {
             font-family: var(--font-display);
             font-style: italic;
-            font-size: 1.25rem;
-            color: var(--gold);
-            margin-bottom: 1.5rem;
+            font-size: 1.35rem;
+            color: var(--gold-soft);
+            margin-bottom: 1.75rem;
         }
-
         .letter-body p {
-            font-size: 1rem;
-            line-height: 1.9;
+            font-size: 1.05rem;
+            font-weight: 300;
+            line-height: 2;
             color: var(--text-soft);
             margin-bottom: 1.25rem;
         }
-
-        .letter-closing {
-            margin-top: 2rem;
-            text-align: right;
-        }
-
+        .letter-closing { margin-top: 2.5rem; text-align: right; }
         .letter-closing p {
             font-family: var(--font-display);
             font-style: italic;
-            font-size: 1.0625rem;
+            font-size: 1.05rem;
             color: var(--rose-light);
             margin-bottom: 0.25rem;
         }
-
         .letter-closing .signature {
             font-family: var(--font-display);
-            font-size: 1.5rem;
-            font-weight: 600;
-            background: linear-gradient(135deg, var(--rose), var(--gold));
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--rose), var(--gold-soft));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
         /* ============================================
-           Countdown / Promise Section
+           PROMISES - floating glass cards
            ============================================ */
-        .promise-section {
-            text-align: center;
-        }
-
+        .promise-section { text-align: center; }
         .promise-title {
             font-family: var(--font-display);
             font-size: clamp(1.5rem, 5vw, 2rem);
             font-weight: 600;
             margin-bottom: 2rem;
         }
-
-        .promise-cards {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-
+        .promise-cards { display: grid; grid-template-columns: 1fr; gap: 0.875rem; }
         .promise-card {
-            background: linear-gradient(135deg, rgba(232, 69, 126, 0.06), rgba(212, 160, 86, 0.04));
-            border: 1px solid rgba(232, 69, 126, 0.12);
-            border-radius: 20px;
+            background: var(--bg-card);
+            border: 1px solid rgba(232, 69, 126, 0.08);
+            border-radius: 22px;
             padding: 1.5rem;
             text-align: center;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             opacity: 0;
-            transform: scale(0.9);
-            transition: all 0.5s ease;
+            transform: scale(0.85) translateY(20px);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-
-        .promise-card.visible {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .promise-emoji {
-            font-size: 2rem;
-            margin-bottom: 0.75rem;
-        }
-
+        .promise-card.visible { opacity: 1; transform: scale(1) translateY(0); }
+        .promise-emoji { font-size: 2.25rem; margin-bottom: 0.75rem; }
         .promise-text {
-            font-family: var(--font-display);
+            font-family: var(--font-body);
             font-style: italic;
-            font-size: 0.9375rem;
-            line-height: 1.6;
+            font-size: 1rem;
+            font-weight: 300;
+            line-height: 1.65;
             color: var(--text-soft);
         }
 
         /* ============================================
-           Final Heart - Grand Finale
+           KENNEDY'S NAME IN LIGHTS - Finale
            ============================================ */
         .finale {
-            min-height: 80vh;
+            min-height: 90vh;
+            min-height: 90dvh;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -543,165 +563,135 @@
             text-align: center;
             padding: 3rem 1.5rem;
             position: relative;
-            z-index: 1;
+            z-index: 3;
         }
-
         .finale-heart {
-            font-size: 5rem;
-            animation: heartbeat 1.2s ease-in-out infinite;
-            filter: drop-shadow(0 0 30px var(--rose-glow));
+            font-size: 5.5rem;
+            animation: heartbeat 1.3s ease-in-out infinite;
+            filter: drop-shadow(0 0 40px var(--rose-glow)) drop-shadow(0 0 80px rgba(232, 69, 126, 0.15));
             margin-bottom: 2rem;
         }
-
         .finale-text {
             font-family: var(--font-display);
-            font-size: clamp(1.5rem, 6vw, 2.5rem);
-            font-weight: 700;
-            line-height: 1.3;
-            margin-bottom: 1rem;
+            font-size: clamp(1.6rem, 7vw, 3rem);
+            font-weight: 800;
+            line-height: 1.25;
+            margin-bottom: 1.25rem;
         }
-
         .finale-text .glow {
-            background: linear-gradient(135deg, var(--rose), var(--rose-light), var(--gold), var(--rose));
-            background-size: 200% 200%;
+            background: linear-gradient(135deg, var(--rose), var(--rose-light), var(--gold-soft), var(--lavender), var(--rose));
+            background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            animation: shimmer 3s ease-in-out infinite;
+            animation: nameShimmer 4s ease-in-out infinite;
         }
-
-        @keyframes shimmer {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
         .finale-sub {
-            font-family: var(--font-display);
+            font-family: var(--font-body);
             font-style: italic;
-            font-size: clamp(1rem, 4vw, 1.25rem);
+            font-size: clamp(1.05rem, 4vw, 1.3rem);
+            font-weight: 300;
             color: var(--text-soft);
-            max-width: 400px;
+            max-width: 420px;
+            line-height: 1.7;
         }
-
+        .finale-xo {
+            margin-top: 2rem;
+            font-size: 1.5rem;
+            letter-spacing: 8px;
+            opacity: 0.6;
+        }
         .back-link {
             display: inline-block;
             margin-top: 3rem;
             font-family: var(--font-ui);
-            font-size: 0.75rem;
+            font-size: 0.7rem;
+            font-weight: 400;
             color: var(--text-muted);
             text-decoration: none;
             letter-spacing: 2px;
             text-transform: uppercase;
             transition: color 0.3s ease;
         }
-
-        .back-link:hover {
-            color: var(--rose);
-        }
+        .back-link:hover { color: var(--rose); }
 
         /* ============================================
-           Touch Sparkle Effect
+           SPARKLE EFFECTS
            ============================================ */
         .sparkle {
             position: fixed;
             pointer-events: none;
             z-index: 100;
-            font-size: 1rem;
-            animation: sparkleFloat 1s ease-out forwards;
+            font-size: 1.1rem;
+            animation: sparkleUp 1.2s ease-out forwards;
         }
-
-        @keyframes sparkleFloat {
-            0% { opacity: 1; transform: translateY(0) scale(1); }
-            100% { opacity: 0; transform: translateY(-60px) scale(0.3); }
-        }
-
-        /* ============================================
-           iPhone Safe Area
-           ============================================ */
-        @supports (padding-bottom: env(safe-area-inset-bottom)) {
-            .finale {
-                padding-bottom: calc(6rem + env(safe-area-inset-bottom));
-            }
+        @keyframes sparkleUp {
+            0% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+            100% { opacity: 0; transform: translateY(-80px) scale(0.2) rotate(45deg); }
         }
 
         /* ============================================
-           Responsive - Tablets
-           ============================================ */
-        @media (min-width: 600px) {
-            .reasons-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .promise-cards {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        /* ============================================
-           Music Button
+           MUSIC BUTTON
            ============================================ */
         .music-btn {
             position: fixed;
             bottom: 1.5rem;
             right: 1.5rem;
-            width: 48px;
-            height: 48px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--rose-deep), var(--rose));
+            background: linear-gradient(135deg, var(--rose-deep), var(--rose), var(--rose-light));
+            background-size: 200% 200%;
             border: none;
             color: white;
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             cursor: pointer;
             z-index: 51;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 20px rgba(232, 69, 126, 0.4);
+            box-shadow: 0 4px 25px rgba(232, 69, 126, 0.45);
             transition: all 0.3s ease;
-            animation: gentlePulse 3s ease-in-out infinite;
+            animation: btnFloat 3s ease-in-out infinite;
         }
-
-        .music-btn.playing {
-            animation: gentlePulse 3s ease-in-out infinite, spin 4s linear infinite;
+        .music-btn.playing { animation: btnFloat 3s ease-in-out infinite, btnSpin 6s linear infinite; }
+        .music-btn:active { transform: scale(0.88); }
+        @keyframes btnFloat {
+            0%, 100% { box-shadow: 0 4px 25px rgba(232, 69, 126, 0.45); }
+            50% { box-shadow: 0 6px 35px rgba(232, 69, 126, 0.65); }
         }
+        @keyframes btnSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        .music-btn:active {
-            transform: scale(0.9);
-        }
-
-        @keyframes gentlePulse {
-            0%, 100% { box-shadow: 0 4px 20px rgba(232, 69, 126, 0.4); }
-            50% { box-shadow: 0 4px 30px rgba(232, 69, 126, 0.6); }
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
+        /* ============================================
+           iPhone / Responsive
+           ============================================ */
         @supports (padding-bottom: env(safe-area-inset-bottom)) {
-            .music-btn {
-                bottom: calc(1.5rem + env(safe-area-inset-bottom));
-            }
+            .finale { padding-bottom: calc(6rem + env(safe-area-inset-bottom)); }
+            .music-btn { bottom: calc(1.5rem + env(safe-area-inset-bottom)); }
+        }
+        @media (min-width: 500px) {
+            .reasons-grid { grid-template-columns: 1fr 1fr; }
+            .promise-cards { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Floating Hearts Background -->
-    <canvas id="hearts-canvas"></canvas>
+    <div class="aurora"></div>
+    <canvas id="starsCanvas"></canvas>
+    <canvas id="petalsCanvas"></canvas>
 
     <!-- ============================================
-         Section 1: Grand Entrance
+         OPENING - Cinematic
          ============================================ -->
     <section class="opening">
+        <div class="opening-crown">&#128081;</div>
         <div class="big-heart">&#10084;&#65039;</div>
         <h1 class="opening-title">
             Happy Valentine's Day,<br>
-            <span class="highlight">Kennedy</span>
+            <span class="name-reveal">Kennedy</span>
         </h1>
-        <p class="opening-subtitle">
+        <p class="opening-sub">
             I built this little corner of the internet just for you.
             Because you deserve a love letter that never fades.
         </p>
@@ -712,12 +702,26 @@
     </section>
 
     <!-- ============================================
-         Section 2: A Poem For You
+         BLOOM FLOWER - Interactive
+         ============================================ -->
+    <section class="bloom-section" id="bloom">
+        <p class="bloom-prompt">Tap the flower, Kennedy</p>
+        <div class="bloom-container" id="bloomContainer">
+            <div class="bloom-ring"></div>
+            <div class="bloom-ring"></div>
+            <div class="bloom-ring"></div>
+            <div class="bloom-emoji">&#127801;</div>
+        </div>
+        <p class="bloom-message">This one's for you, beautiful &#10084;&#65039;</p>
+    </section>
+
+    <!-- ============================================
+         POEMS
          ============================================ -->
     <section class="love-section" id="poem">
         <div class="section-divider">
             <div class="divider-line"></div>
-            <span class="divider-heart">&#10084;&#65039;</span>
+            <span class="divider-icon">&#10024;</span>
             <div class="divider-line"></div>
         </div>
         <p class="section-label">Written For You</p>
@@ -771,15 +775,40 @@
             </div>
             <p class="poem-signature">Yours, completely</p>
         </div>
+
+        <div class="poem-card">
+            <h2 class="poem-title">Kennedy</h2>
+            <div class="poem-text">
+                <div class="stanza">
+                    Say your name and the whole room softens,<br>
+                    Seven letters that rewrite my gravity.<br>
+                    The universe was patient, building you<br>
+                    From stardust and from Sunday morning light.
+                </div>
+                <div class="stanza">
+                    I found forever in the way you sleep,<br>
+                    In how you hold your coffee with both hands,<br>
+                    In every little thing you do without thinking,<br>
+                    The things you'll never notice but I always will.
+                </div>
+                <div class="stanza">
+                    So let the world keep spinning, let it turn,<br>
+                    I already found what everyone is searching for.<br>
+                    She has your name. She has your face.<br>
+                    She is my favorite place.
+                </div>
+            </div>
+            <p class="poem-signature">Only yours, Anthony</p>
+        </div>
     </section>
 
     <!-- ============================================
-         Section 3: Love Quotes
+         LOVE QUOTES
          ============================================ -->
     <section class="love-section quotes-section" id="quotes">
         <div class="section-divider">
             <div class="divider-line"></div>
-            <span class="divider-heart">&#10084;&#65039;</span>
+            <span class="divider-icon">&#128156;</span>
             <div class="divider-line"></div>
         </div>
         <p class="section-label">Words That Remind Me Of You</p>
@@ -787,45 +816,44 @@
 
         <div class="quote-carousel" id="quoteCarousel">
             <div class="quote-slide active" data-index="0">
-                <p class="quote-text">"I have waited for this opportunity for more than half a century, to repeat to you once again my vow of eternal fidelity and everlasting love."</p>
-                <p class="quote-author">~Gabriel Garc&iacute;a M&aacute;rquez</p>
-            </div>
-            <div class="quote-slide" data-index="1">
                 <p class="quote-text">"Whatever our souls are made of, his and mine are the same."</p>
                 <p class="quote-author">~Emily Bront&euml;</p>
             </div>
-            <div class="quote-slide" data-index="2">
+            <div class="quote-slide" data-index="1">
                 <p class="quote-text">"You know you're in love when you can't fall asleep because reality is finally better than your dreams."</p>
                 <p class="quote-author">~Dr. Seuss</p>
             </div>
-            <div class="quote-slide" data-index="3">
+            <div class="quote-slide" data-index="2">
                 <p class="quote-text">"In all the world, there is no heart for me like yours. In all the world, there is no love for you like mine."</p>
                 <p class="quote-author">~Maya Angelou</p>
             </div>
-            <div class="quote-slide" data-index="4">
+            <div class="quote-slide" data-index="3">
                 <p class="quote-text">"I saw that you were perfect, and so I loved you. Then I saw that you were not perfect and I loved you even more."</p>
                 <p class="quote-author">~Angelita Lim</p>
             </div>
-            <div class="quote-slide" data-index="5">
+            <div class="quote-slide" data-index="4">
                 <p class="quote-text">"If I had a flower for every time I thought of you, I could walk through my garden forever."</p>
                 <p class="quote-author">~Alfred Tennyson</p>
             </div>
-            <div class="quote-slide" data-index="6">
+            <div class="quote-slide" data-index="5">
                 <p class="quote-text">"The best thing to hold onto in life is each other."</p>
                 <p class="quote-author">~Audrey Hepburn</p>
             </div>
+            <div class="quote-slide" data-index="6">
+                <p class="quote-text">"I have waited for this opportunity for more than half a century, to repeat to you once again my vow of eternal fidelity and everlasting love."</p>
+                <p class="quote-author">~Gabriel Garc&iacute;a M&aacute;rquez</p>
+            </div>
         </div>
-
         <div class="quote-dots" id="quoteDots"></div>
     </section>
 
     <!-- ============================================
-         Section 4: Reasons I Love You
+         REASONS I LOVE YOU
          ============================================ -->
     <section class="love-section" id="reasons">
         <div class="section-divider">
             <div class="divider-line"></div>
-            <span class="divider-heart">&#10084;&#65039;</span>
+            <span class="divider-icon">&#127801;</span>
             <div class="divider-line"></div>
         </div>
         <p class="section-label">An Incomplete List</p>
@@ -841,7 +869,7 @@
                 <p class="reason-text"><strong>Your heart</strong> . . . the way you care about people, the way you love without keeping score.</p>
             </div>
             <div class="reason-card">
-                <span class="reason-icon">&#128165;</span>
+                <span class="reason-icon">&#128081;</span>
                 <p class="reason-text"><strong>Your strength</strong> . . . you handle everything with a grace that leaves me in awe every single time.</p>
             </div>
             <div class="reason-card">
@@ -857,23 +885,31 @@
                 <p class="reason-text"><strong>Your laugh</strong> . . . the most beautiful sound in any room. I'd do anything to hear it every day.</p>
             </div>
             <div class="reason-card">
-                <span class="reason-icon">&#129656;</span>
+                <span class="reason-icon">&#127800;</span>
                 <p class="reason-text"><strong>Your patience</strong> . . . with me, with life, with everything. You make hard things feel manageable.</p>
             </div>
             <div class="reason-card">
                 <span class="reason-icon">&#128171;</span>
                 <p class="reason-text"><strong>You chose me</strong> . . . out of everyone in this world, you chose me. And I'll spend my life making sure you never regret it.</p>
             </div>
+            <div class="reason-card">
+                <span class="reason-icon">&#9749;</span>
+                <p class="reason-text"><strong>The little things</strong> . . . how you hold your phone with both hands, the face you make when you're focused, how you say my name.</p>
+            </div>
+            <div class="reason-card">
+                <span class="reason-icon">&#127752;</span>
+                <p class="reason-text"><strong>You make me better</strong> . . . I'm a better person because of you. Not because you asked me to change, but because you make me want to.</p>
+            </div>
         </div>
     </section>
 
     <!-- ============================================
-         Section 5: A Love Letter
+         LOVE LETTER
          ============================================ -->
     <section class="love-section" id="letter">
         <div class="section-divider">
             <div class="divider-line"></div>
-            <span class="divider-heart">&#10084;&#65039;</span>
+            <span class="divider-icon">&#128140;</span>
             <div class="divider-line"></div>
         </div>
         <p class="section-label">From My Heart</p>
@@ -912,12 +948,12 @@
     </section>
 
     <!-- ============================================
-         Section 6: My Promises
+         PROMISES
          ============================================ -->
     <section class="love-section promise-section" id="promises">
         <div class="section-divider">
             <div class="divider-line"></div>
-            <span class="divider-heart">&#10084;&#65039;</span>
+            <span class="divider-icon">&#128142;</span>
             <div class="divider-line"></div>
         </div>
         <p class="section-label">My Promises To You</p>
@@ -937,7 +973,7 @@
                 <p class="promise-text">I promise to never stop trying to make you laugh, even when my jokes are terrible.</p>
             </div>
             <div class="promise-card">
-                <div class="promise-emoji">&#9749;</div>
+                <div class="promise-emoji">&#127793;</div>
                 <p class="promise-text">I promise to build a life with you that we're both proud of.</p>
             </div>
             <div class="promise-card">
@@ -952,7 +988,7 @@
     </section>
 
     <!-- ============================================
-         Final Section: Grand Finale
+         GRAND FINALE
          ============================================ -->
     <section class="finale">
         <div class="finale-heart">&#10084;&#65039;</div>
@@ -962,6 +998,7 @@
         <p class="finale-sub">
             Today and every day, I love you more than words on any screen could ever say.
         </p>
+        <div class="finale-xo">&#10084;&#65039; &#128139; &#10084;&#65039;</div>
         <a href="index.html" class="back-link">&larr; Back to portfolio</a>
     </section>
 
@@ -971,221 +1008,246 @@
     </audio>
     <button class="music-btn" id="musicBtn" aria-label="Play music">&#9835;</button>
 
-    <!-- ============================================
-         JavaScript - Bringing It All To Life
-         ============================================ -->
     <script>
     (function() {
         'use strict';
 
         // ============================================
-        // Floating Hearts Canvas
+        // STARFIELD - twinkling background stars
         // ============================================
-        const canvas = document.getElementById('hearts-canvas');
-        const ctx = canvas.getContext('2d');
-        let hearts = [];
+        const starsCanvas = document.getElementById('starsCanvas');
+        const sCtx = starsCanvas.getContext('2d');
+        let stars = [];
 
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+        function resizeStars() {
+            starsCanvas.width = window.innerWidth;
+            starsCanvas.height = document.documentElement.scrollHeight;
         }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
+        resizeStars();
+        window.addEventListener('resize', resizeStars);
 
-        class Heart {
-            constructor() {
-                this.reset();
-            }
-
-            reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = canvas.height + 20;
-                this.size = Math.random() * 12 + 6;
-                this.speedY = Math.random() * 0.8 + 0.2;
-                this.speedX = (Math.random() - 0.5) * 0.5;
-                this.opacity = Math.random() * 0.15 + 0.03;
-                this.rotation = Math.random() * Math.PI * 2;
-                this.rotationSpeed = (Math.random() - 0.5) * 0.02;
-                this.wobble = Math.random() * Math.PI * 2;
-                this.wobbleSpeed = Math.random() * 0.02 + 0.01;
-            }
-
-            update() {
-                this.y -= this.speedY;
-                this.wobble += this.wobbleSpeed;
-                this.x += this.speedX + Math.sin(this.wobble) * 0.3;
-                this.rotation += this.rotationSpeed;
-
-                if (this.y < -30) {
-                    this.reset();
-                }
-            }
-
-            draw() {
-                ctx.save();
-                ctx.translate(this.x, this.y);
-                ctx.rotate(this.rotation);
-                ctx.globalAlpha = this.opacity;
-                ctx.fillStyle = '#e8457e';
-                ctx.beginPath();
-
-                const s = this.size;
-                ctx.moveTo(0, -s * 0.3);
-                ctx.bezierCurveTo(-s * 0.5, -s, -s, -s * 0.4, 0, s * 0.4);
-                ctx.bezierCurveTo(s, -s * 0.4, s * 0.5, -s, 0, -s * 0.3);
-                ctx.fill();
-
-                ctx.restore();
-            }
-        }
-
-        // Create hearts
-        const heartCount = Math.min(30, Math.floor(window.innerWidth / 25));
-        for (let i = 0; i < heartCount; i++) {
-            const heart = new Heart();
-            heart.y = Math.random() * canvas.height;
-            hearts.push(heart);
-        }
-
-        function animateHearts() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            hearts.forEach(heart => {
-                heart.update();
-                heart.draw();
+        const starCount = Math.min(200, Math.floor((window.innerWidth * window.innerHeight) / 4000));
+        for (let i = 0; i < starCount; i++) {
+            stars.push({
+                x: Math.random() * starsCanvas.width,
+                y: Math.random() * starsCanvas.height,
+                r: Math.random() * 1.2 + 0.3,
+                a: Math.random(),
+                speed: Math.random() * 0.005 + 0.002,
+                offset: Math.random() * Math.PI * 2,
+                color: ['#fde8ef', '#f472b6', '#c4b5fd', '#e8c88a', '#ffffff'][Math.floor(Math.random() * 5)]
             });
-            requestAnimationFrame(animateHearts);
         }
-        animateHearts();
+
+        function drawStars(t) {
+            sCtx.clearRect(0, 0, starsCanvas.width, starsCanvas.height);
+            stars.forEach(s => {
+                const twinkle = 0.3 + 0.7 * ((Math.sin(t * s.speed + s.offset) + 1) / 2);
+                sCtx.beginPath();
+                sCtx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                sCtx.fillStyle = s.color;
+                sCtx.globalAlpha = twinkle * 0.6;
+                sCtx.fill();
+            });
+            sCtx.globalAlpha = 1;
+        }
 
         // ============================================
-        // Scroll Reveal Animations
+        // PETAL RAIN - falling rose petals
         // ============================================
-        const sections = document.querySelectorAll('.love-section');
+        const petalsCanvas = document.getElementById('petalsCanvas');
+        const pCtx = petalsCanvas.getContext('2d');
+        let petals = [];
+
+        function resizePetals() {
+            petalsCanvas.width = window.innerWidth;
+            petalsCanvas.height = window.innerHeight;
+        }
+        resizePetals();
+        window.addEventListener('resize', resizePetals);
+
+        const petalColors = ['#e8457e', '#f472b6', '#fbcfe8', '#c4b5fd', '#e8c88a'];
+        const petalCount = Math.min(25, Math.floor(window.innerWidth / 20));
+
+        for (let i = 0; i < petalCount; i++) {
+            petals.push({
+                x: Math.random() * petalsCanvas.width,
+                y: Math.random() * petalsCanvas.height - petalsCanvas.height,
+                size: Math.random() * 6 + 3,
+                speedY: Math.random() * 0.6 + 0.15,
+                speedX: (Math.random() - 0.5) * 0.3,
+                rot: Math.random() * Math.PI * 2,
+                rotSpeed: (Math.random() - 0.5) * 0.015,
+                wobble: Math.random() * Math.PI * 2,
+                wobbleSpeed: Math.random() * 0.02 + 0.008,
+                opacity: Math.random() * 0.25 + 0.05,
+                color: petalColors[Math.floor(Math.random() * petalColors.length)]
+            });
+        }
+
+        function drawPetals() {
+            pCtx.clearRect(0, 0, petalsCanvas.width, petalsCanvas.height);
+            petals.forEach(p => {
+                p.y += p.speedY;
+                p.wobble += p.wobbleSpeed;
+                p.x += p.speedX + Math.sin(p.wobble) * 0.4;
+                p.rot += p.rotSpeed;
+
+                if (p.y > petalsCanvas.height + 20) {
+                    p.y = -15;
+                    p.x = Math.random() * petalsCanvas.width;
+                }
+
+                pCtx.save();
+                pCtx.translate(p.x, p.y);
+                pCtx.rotate(p.rot);
+                pCtx.globalAlpha = p.opacity;
+                pCtx.fillStyle = p.color;
+
+                // Draw petal shape
+                pCtx.beginPath();
+                pCtx.ellipse(0, 0, p.size, p.size * 0.55, 0, 0, Math.PI * 2);
+                pCtx.fill();
+                pCtx.beginPath();
+                pCtx.ellipse(p.size * 0.3, 0, p.size * 0.7, p.size * 0.4, 0.5, 0, Math.PI * 2);
+                pCtx.fill();
+
+                pCtx.restore();
+            });
+        }
+
+        // Combined animation loop
+        function animate(t) {
+            drawStars(t);
+            drawPetals();
+            requestAnimationFrame(animate);
+        }
+        requestAnimationFrame(animate);
+
+        // Re-measure stars on scroll (for full page height)
+        let resizeTimeout;
+        const ro = new ResizeObserver(() => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(resizeStars, 200);
+        });
+        ro.observe(document.body);
+
+        // ============================================
+        // SCROLL REVEAL
+        // ============================================
+        const sections = document.querySelectorAll('.love-section, .bloom-section');
         const reasonCards = document.querySelectorAll('.reason-card');
         const promiseCards = document.querySelectorAll('.promise-card');
 
-        const sectionObserver = new IntersectionObserver((entries) => {
+        const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
+                if (entry.isIntersecting) entry.target.classList.add('visible');
             });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.08 });
 
-        sections.forEach(section => sectionObserver.observe(section));
+        sections.forEach(s => revealObserver.observe(s));
 
         const cardObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry, i) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('visible');
-                    }, i * 100);
-                }
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
             });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.05 });
 
-        reasonCards.forEach((card, i) => {
-            card.style.transitionDelay = `${i * 0.08}s`;
-            cardObserver.observe(card);
-        });
+        reasonCards.forEach((c, i) => { c.style.transitionDelay = `${i * 0.07}s`; cardObserver.observe(c); });
+        promiseCards.forEach((c, i) => { c.style.transitionDelay = `${i * 0.09}s`; cardObserver.observe(c); });
 
-        promiseCards.forEach((card, i) => {
-            card.style.transitionDelay = `${i * 0.1}s`;
-            cardObserver.observe(card);
+        // ============================================
+        // BLOOM FLOWER
+        // ============================================
+        const bloomContainer = document.getElementById('bloomContainer');
+        let bloomed = false;
+
+        bloomContainer.addEventListener('click', () => {
+            if (bloomed) return;
+            bloomed = true;
+            bloomContainer.classList.add('bloomed');
+
+            // Burst of petals from the flower
+            const rect = bloomContainer.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            const burstEmoji = ['\uD83C\uDF39', '\uD83C\uDF3A', '\uD83C\uDF38', '\uD83C\uDF37', '\u2728', '\uD83E\uDE77', '\uD83D\uDC96'];
+            for (let i = 0; i < 15; i++) {
+                const el = document.createElement('div');
+                el.style.cssText = `position:fixed;pointer-events:none;z-index:100;font-size:${1 + Math.random()}rem;left:${cx}px;top:${cy}px;`;
+                el.textContent = burstEmoji[Math.floor(Math.random() * burstEmoji.length)];
+                document.body.appendChild(el);
+                const angle = (Math.PI * 2 / 15) * i + Math.random() * 0.5;
+                const dist = 60 + Math.random() * 80;
+                const dx = Math.cos(angle) * dist;
+                const dy = Math.sin(angle) * dist;
+                el.animate([
+                    { transform: 'translate(0,0) scale(0.5)', opacity: 1 },
+                    { transform: `translate(${dx}px,${dy - 40}px) scale(1.2)`, opacity: 0 }
+                ], { duration: 1000 + Math.random() * 500, easing: 'cubic-bezier(0.34,1.56,0.64,1)', fill: 'forwards' });
+                setTimeout(() => el.remove(), 1600);
+            }
         });
 
         // ============================================
-        // Quote Carousel
+        // QUOTE CAROUSEL
         // ============================================
         const slides = document.querySelectorAll('.quote-slide');
         const dotsContainer = document.getElementById('quoteDots');
         let currentSlide = 0;
-        let autoPlayInterval;
 
-        // Create dots
         slides.forEach((_, i) => {
             const dot = document.createElement('button');
             dot.classList.add('quote-dot');
-            dot.setAttribute('aria-label', `Quote ${i + 1}`);
             if (i === 0) dot.classList.add('active');
-            dot.addEventListener('click', () => goToSlide(i));
+            dot.addEventListener('click', () => { goToSlide(i); resetAuto(); });
             dotsContainer.appendChild(dot);
         });
-
         const dots = document.querySelectorAll('.quote-dot');
 
-        function goToSlide(index) {
+        function goToSlide(idx) {
             slides[currentSlide].classList.remove('active');
             dots[currentSlide].classList.remove('active');
-            currentSlide = index;
+            currentSlide = idx;
             slides[currentSlide].classList.add('active');
             dots[currentSlide].classList.add('active');
         }
+        let autoInt = setInterval(() => goToSlide((currentSlide + 1) % slides.length), 4500);
+        function resetAuto() { clearInterval(autoInt); autoInt = setInterval(() => goToSlide((currentSlide + 1) % slides.length), 4500); }
 
-        function nextSlide() {
-            goToSlide((currentSlide + 1) % slides.length);
-        }
-
-        function startAutoPlay() {
-            autoPlayInterval = setInterval(nextSlide, 4500);
-        }
-
-        function resetAutoPlay() {
-            clearInterval(autoPlayInterval);
-            startAutoPlay();
-        }
-
-        startAutoPlay();
-
-        // Swipe support for carousel on mobile
-        let touchStartX = 0;
+        // Swipe
+        let tx = 0;
         const carousel = document.getElementById('quoteCarousel');
-
-        carousel.addEventListener('touchstart', (e) => {
-            touchStartX = e.touches[0].clientX;
-        }, { passive: true });
-
-        carousel.addEventListener('touchend', (e) => {
-            const diff = touchStartX - e.changedTouches[0].clientX;
-            if (Math.abs(diff) > 50) {
-                if (diff > 0) {
-                    goToSlide((currentSlide + 1) % slides.length);
-                } else {
-                    goToSlide((currentSlide - 1 + slides.length) % slides.length);
-                }
-                resetAutoPlay();
+        carousel.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+        carousel.addEventListener('touchend', e => {
+            const d = tx - e.changedTouches[0].clientX;
+            if (Math.abs(d) > 50) {
+                goToSlide(d > 0 ? (currentSlide + 1) % slides.length : (currentSlide - 1 + slides.length) % slides.length);
+                resetAuto();
             }
         }, { passive: true });
 
         // ============================================
-        // Touch/Click Sparkle Effect
+        // SPARKLE ON TOUCH
         // ============================================
-        const sparkleEmojis = ['\u2764\uFE0F', '\uD83D\uDC96', '\u2728', '\uD83C\uDF39', '\uD83D\uDC97', '\uD83D\uDC95', '\u2763\uFE0F', '\uD83E\uDE77'];
+        const sparkles = ['\u2764\uFE0F', '\uD83D\uDC96', '\u2728', '\uD83C\uDF39', '\uD83D\uDC97', '\uD83D\uDC95', '\uD83E\uDE77', '\uD83C\uDF38', '\uD83D\uDCAB', '\u2763\uFE0F'];
 
-        document.addEventListener('click', (e) => {
-            createSparkle(e.clientX, e.clientY);
-        });
-
-        document.addEventListener('touchstart', (e) => {
-            const touch = e.touches[0];
-            createSparkle(touch.clientX, touch.clientY);
-        }, { passive: true });
-
-        function createSparkle(x, y) {
-            for (let i = 0; i < 3; i++) {
-                const sparkle = document.createElement('div');
-                sparkle.classList.add('sparkle');
-                sparkle.textContent = sparkleEmojis[Math.floor(Math.random() * sparkleEmojis.length)];
-                sparkle.style.left = (x + (Math.random() - 0.5) * 40) + 'px';
-                sparkle.style.top = (y + (Math.random() - 0.5) * 40) + 'px';
-                document.body.appendChild(sparkle);
-
-                setTimeout(() => sparkle.remove(), 1000);
+        function doSparkle(x, y) {
+            for (let i = 0; i < 4; i++) {
+                const el = document.createElement('div');
+                el.classList.add('sparkle');
+                el.textContent = sparkles[Math.floor(Math.random() * sparkles.length)];
+                el.style.left = (x + (Math.random() - 0.5) * 50) + 'px';
+                el.style.top = (y + (Math.random() - 0.5) * 50) + 'px';
+                document.body.appendChild(el);
+                setTimeout(() => el.remove(), 1200);
             }
         }
+        document.addEventListener('click', e => doSparkle(e.clientX, e.clientY));
+        document.addEventListener('touchstart', e => doSparkle(e.touches[0].clientX, e.touches[0].clientY), { passive: true });
 
         // ============================================
-        // Music - simple play/pause, loops forever
+        // MUSIC
         // ============================================
         const audio = document.getElementById('bgMusic');
         const musicBtn = document.getElementById('musicBtn');
