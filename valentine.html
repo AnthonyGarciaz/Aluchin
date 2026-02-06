@@ -151,65 +151,9 @@
         .candle:nth-child(5) .flame { animation-delay: 0.08s; height: 24px; }
         .candle:nth-child(5) .candle-body { height: 42px; }
 
-        /* ============================================
-           COUNTDOWN TIMER - subtle fixed top
-           ============================================ */
-        .countdown-bar {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 50;
-            background: linear-gradient(180deg, rgba(10, 3, 4, 0.95), rgba(10, 3, 4, 0.5), transparent);
-            padding: 0.6rem 1rem 1.2rem;
-            text-align: center;
-            pointer-events: none;
-            opacity: 0;
-            animation: fadeIn 1s ease-out 2.8s forwards;
-        }
-        @keyframes fadeIn { to { opacity: 1; } }
-        .countdown-label {
-            font-family: var(--font-ui);
-            font-size: 0.5rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--oro-apagado);
-            margin-bottom: 0.3rem;
-        }
-        .countdown-digits {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            font-family: var(--font-display);
-        }
-        .countdown-unit { display: flex; flex-direction: column; align-items: center; }
-        .countdown-num {
-            font-size: 1.1rem; font-weight: 700;
-            color: var(--crema);
-            min-width: 2ch; text-align: center; line-height: 1;
-        }
-        .countdown-word {
-            font-family: var(--font-ui);
-            font-size: 0.4rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            margin-top: 0.15rem;
-        }
-        .countdown-sep {
-            font-size: 1rem; color: var(--oro-apagado); margin-top: -0.1rem;
-            animation: pulseSep 1s ease-in-out infinite;
-        }
         @keyframes pulseSep {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.2; }
-        }
-        .countdown-past .countdown-label,
-        .countdown-past .countdown-digits { display: none; }
-        .countdown-past::after {
-            content: "Happy Valentine's Day, Kennedy";
-            font-family: var(--font-display);
-            font-size: 0.85rem;
-            font-style: italic;
-            color: var(--oro-suave);
         }
 
         /* ============================================
@@ -537,7 +481,7 @@
             border: 1px solid rgba(139, 26, 26, 0.1);
             border-radius: 20px;
             padding: 1.25rem 1.5rem;
-            display: flex; align-items: flex-start; gap: 1rem;
+            display: block;
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             opacity: 0; transform: translateX(-30px);
@@ -546,7 +490,6 @@
         .reason-card.visible { opacity: 1; transform: translateX(0); }
         .reason-card:nth-child(even) { transform: translateX(30px); }
         .reason-card:nth-child(even).visible { transform: translateX(0); }
-        .reason-icon { font-size: 1.35rem; flex-shrink: 0; margin-top: 1px; }
         .reason-text { font-size: 1rem; line-height: 1.65; color: var(--text-soft); font-weight: 300; }
         .reason-text strong { color: var(--text); font-weight: 500; }
 
@@ -857,19 +800,6 @@
         <div class="candle"><div class="flame-container"><div class="flame-glow"></div><div class="flame"></div></div><div class="candle-body"></div></div>
     </div>
 
-    <!-- Countdown Timer -->
-    <div class="countdown-bar" id="countdownBar">
-        <div class="countdown-label">Valentine's Day</div>
-        <div class="countdown-digits">
-            <div class="countdown-unit"><span class="countdown-num" id="cdDays">00</span><span class="countdown-word">days</span></div>
-            <span class="countdown-sep">:</span>
-            <div class="countdown-unit"><span class="countdown-num" id="cdHours">00</span><span class="countdown-word">hrs</span></div>
-            <span class="countdown-sep">:</span>
-            <div class="countdown-unit"><span class="countdown-num" id="cdMins">00</span><span class="countdown-word">min</span></div>
-            <span class="countdown-sep">:</span>
-            <div class="countdown-unit"><span class="countdown-num" id="cdSecs">00</span><span class="countdown-word">sec</span></div>
-        </div>
-    </div>
 
     <!-- ============================================
          OPENING
@@ -1051,43 +981,30 @@
 
         <div class="reasons-grid">
             <div class="reason-card">
-                <span class="reason-icon">&#10024;</span>
                 <p class="reason-text"><strong>Your smile</strong> . . . could stop wars and start revolutions. One look and my worst day becomes my best.</p>
             </div>
             <div class="reason-card">
-                <span class="reason-icon">&#128156;</span>
                 <p class="reason-text"><strong>Your heart</strong> . . . the way you care about people, the way you love without keeping score.</p>
             </div>
             <div class="reason-card">
-                <span class="reason-icon">&#128081;</span>
                 <p class="reason-text"><strong>Your strength</strong> . . . you handle everything with a grace that leaves me amazed every single time.</p>
             </div>
             <div class="reason-card">
-                <span class="reason-icon">&#127770;</span>
-                <p class="reason-text"><strong>Your presence</strong> . . . being next to you feels like coming home after the longest day.</p>
-            </div>
-            <div class="reason-card">
-                <span class="reason-icon">&#128293;</span>
                 <p class="reason-text"><strong>Your passion</strong> . . . the way your eyes light up when you talk about the things you love.</p>
             </div>
             <div class="reason-card">
-                <span class="reason-icon">&#127775;</span>
                 <p class="reason-text"><strong>Your laugh</strong> . . . the most beautiful sound in any room. I'd do anything to hear it every day.</p>
             </div>
             <div class="reason-card">
-                <span class="reason-icon">&#127800;</span>
                 <p class="reason-text"><strong>Your patience</strong> . . . with me, with life, with everything. You make hard things feel possible.</p>
             </div>
             <div class="reason-card">
-                <span class="reason-icon">&#128171;</span>
                 <p class="reason-text"><strong>You chose me</strong> . . . out of everyone in this world, you chose me. And I'm going to spend my life making sure you never regret it.</p>
             </div>
             <div class="reason-card">
-                <span class="reason-icon">&#9749;</span>
                 <p class="reason-text"><strong>The little things</strong> . . . how you hold your phone with both hands, the face you make when you focus, how you say my name.</p>
             </div>
             <div class="reason-card">
-                <span class="reason-icon">&#127752;</span>
                 <p class="reason-text"><strong>You make me better</strong> . . . I'm a better person because of you. Not because you asked me to change, but because you make me want to.</p>
             </div>
         </div>
@@ -1215,29 +1132,6 @@
     <script>
     (function() {
         'use strict';
-
-        // ============================================
-        // COUNTDOWN TIMER
-        // ============================================
-        function updateCountdown() {
-            const now = new Date();
-            let vday = new Date(now.getFullYear(), 1, 14);
-            if (now > vday) vday = new Date(now.getFullYear() + 1, 1, 14);
-            const diff = vday - now;
-            const bar = document.getElementById('countdownBar');
-
-            if (diff <= 0 || (now.getMonth() === 1 && now.getDate() === 14)) {
-                bar.classList.add('countdown-past');
-                return;
-            }
-
-            document.getElementById('cdDays').textContent = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
-            document.getElementById('cdHours').textContent = String(Math.floor((diff / (1000 * 60 * 60)) % 24)).padStart(2, '0');
-            document.getElementById('cdMins').textContent = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(2, '0');
-            document.getElementById('cdSecs').textContent = String(Math.floor((diff / 1000) % 60)).padStart(2, '0');
-        }
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
 
         // ============================================
         // STARFIELD
