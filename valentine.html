@@ -1185,121 +1185,23 @@
         }
 
         // ============================================
-        // Music Player
+        // Music - simple play/pause, loops forever
         // ============================================
-        const playlist = [
-            { title: 'Mrs Magic', artist: 'Strawberry Guy', id: '0TZejo18HlJ86OrWNsXKnw', mood: '\uD83C\uDF38' },
-            { title: 'Say Yes To Heaven', artist: 'Lana Del Rey', id: '098fSSsID99LoAKo7JoMz9', mood: '\u2601\uFE0F' },
-            { title: 'I Love You So', artist: 'The Walters', id: '1C7kXU46QO8ILWjwDpvhHV', mood: '\uD83D\uDC96' },
-            { title: 'Heavenly', artist: 'Cigarettes After Sex', id: '0M6TLjxixptslrmQpWbRoR', mood: '\uD83C\uDF19' },
-            { title: 'Those Eyes', artist: 'New West', id: '50x1Ic8CaXkYNvjmxe3WXy', mood: '\u2728' },
-            { title: 'we fell in love in october', artist: 'girl in red', id: '6FYfhKknpt05Om6YPcEYAg', mood: '\uD83C\uDF42' },
-            { title: 'Lover Girl', artist: 'Laufey', id: '5Rd93c1Rbg9qhSVHTC7xJN', mood: '\uD83C\uDF39' },
-            { title: 'Fade Into You', artist: 'Mazzy Star', id: '1LzNfuep1bnAUR9skqdHCK', mood: '\uD83D\uDCAB' },
-            { title: "Nothing's Gonna Hurt You Baby", artist: 'Cigarettes After Sex', id: '7cs7MLtAWvsdf3w5kBvfK2', mood: '\uD83E\uDE77' },
-            { title: 'End of Beginning', artist: 'Djo', id: '3qhlB30KknSejmIvZZLjOD', mood: '\uD83C\uDF05' },
-            { title: 'Kiss Me Again', artist: 'Roy Bee', id: '2zdu5Tm7Nak2uZlYddyCap', mood: '\uD83D\uDC8B' },
-            { title: 'My Love Mine All Mine', artist: 'Mitski', id: '3vkCueOmm7xQDoJ17W1Pm3', mood: '\uD83D\uDC9D' },
-        ];
+        const audio = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicBtn');
+        let playing = false;
 
-        const musicPlayer = document.getElementById('musicPlayer');
-        const musicEntryBtn = document.getElementById('musicEntryBtn');
-        const playerToggle = document.getElementById('playerToggle');
-        const playerTitle = document.getElementById('playerTitle');
-        const playerArtist = document.getElementById('playerArtist');
-        const playerExpand = document.getElementById('playerExpand');
-        const playerDrawer = document.getElementById('playerDrawer');
-        const playlistGrid = document.getElementById('playlistGrid');
-        const spotifyContainer = document.getElementById('spotifyContainer');
-        const spotifyFrame = document.getElementById('spotifyFrame');
-
-        let currentTrackIndex = -1;
-        let isPlaying = false;
-        let playerVisible = false;
-
-        // Build playlist UI
-        playlist.forEach((track, i) => {
-            const item = document.createElement('button');
-            item.classList.add('playlist-item');
-            item.setAttribute('data-index', i);
-            item.innerHTML = `
-                <span class="playlist-item-number">${i + 1}</span>
-                <div class="playlist-item-info">
-                    <div class="playlist-item-title">${track.title}</div>
-                    <div class="playlist-item-artist">${track.artist}</div>
-                </div>
-                <span class="playlist-item-mood">${track.mood}</span>
-            `;
-            item.addEventListener('click', () => playTrack(i));
-            playlistGrid.appendChild(item);
-        });
-
-        function playTrack(index) {
-            // Update active state in playlist
-            const items = document.querySelectorAll('.playlist-item');
-            items.forEach(item => item.classList.remove('active'));
-            items[index].classList.add('active');
-
-            currentTrackIndex = index;
-            const track = playlist[index];
-
-            // Update player bar info
-            playerTitle.textContent = track.title;
-            playerArtist.textContent = track.artist;
-
-            // Load Spotify embed
-            spotifyFrame.src = `https://open.spotify.com/embed/track/${track.id}?utm_source=generator&theme=0`;
-            spotifyContainer.classList.add('active');
-
-            isPlaying = true;
-            playerToggle.innerHTML = '\u23F8';
-
-            // Close drawer after picking a song
-            playerDrawer.classList.remove('open');
-            playerExpand.classList.remove('open');
-        }
-
-        // Entry button: show the player
-        musicEntryBtn.addEventListener('click', () => {
-            if (!playerVisible) {
-                playerVisible = true;
-                musicPlayer.classList.remove('hidden');
-                musicEntryBtn.classList.add('player-active');
-                // Auto open drawer on first tap
-                playerDrawer.classList.add('open');
-                playerExpand.classList.add('open');
+        musicBtn.addEventListener('click', () => {
+            if (playing) {
+                audio.pause();
+                musicBtn.classList.remove('playing');
+                musicBtn.innerHTML = '\u266B';
+                playing = false;
             } else {
-                // Toggle drawer
-                playerDrawer.classList.toggle('open');
-                playerExpand.classList.toggle('open');
-            }
-        });
-
-        // Expand button: toggle drawer
-        playerExpand.addEventListener('click', () => {
-            playerDrawer.classList.toggle('open');
-            playerExpand.classList.toggle('open');
-        });
-
-        // Play/pause toggle
-        playerToggle.addEventListener('click', () => {
-            if (currentTrackIndex === -1) {
-                // Nothing loaded yet, play first track
-                playTrack(0);
-            } else {
-                // Toggle by reloading or stopping
-                if (isPlaying) {
-                    spotifyContainer.classList.remove('active');
-                    spotifyFrame.src = '';
-                    isPlaying = false;
-                    playerToggle.innerHTML = '\u25B6';
-                } else {
-                    const track = playlist[currentTrackIndex];
-                    spotifyFrame.src = `https://open.spotify.com/embed/track/${track.id}?utm_source=generator&theme=0`;
-                    spotifyContainer.classList.add('active');
-                    isPlaying = true;
-                    playerToggle.innerHTML = '\u23F8';
-                }
+                audio.play();
+                musicBtn.classList.add('playing');
+                musicBtn.innerHTML = '\u23F8';
+                playing = true;
             }
         });
 
